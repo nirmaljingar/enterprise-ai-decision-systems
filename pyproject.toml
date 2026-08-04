@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "enterprise-ai-decision-systems"
-version = "2.0.0"
+version = "2.0.1"
 description = "A reproducible, modular research companion for reliable Enterprise AI Decision Systems."
 readme = "README.md"
 license = {text = "Apache-2.0"}

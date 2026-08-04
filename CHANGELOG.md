@@ -2,6 +2,32 @@
 
 All notable changes to the EADS Research Companion are documented in this file.
 
+## [2.0.1] - 2026-08-05
+
+Two fail-open cases and the documentation that had drifted behind the implementation. Patch rather
+than minor, though it does change behaviour: input that was approved before is now rejected, and the
+previous behaviour was the bug.
+
+### Fixed
+
+- Conflicting duplicate fields fail closed. A completion stating one field twice with two different
+  values was resolved by taking the first, so the value governance checked was the one the attacker
+  positioned. Two disagreeing values now yield an unparsed action; a restatement that agrees still
+  parses. `benchmarks/manifests/supply_chain_ambiguous_injection.json` measures it.
+- Every public subpackage imports on its own. `from eads.governance import GovernanceLayer` in a
+  fresh interpreter raised `ImportError` through a cycle in `eads.core`, which the test suite could
+  not see because it always entered through `eads.core` first.
+- A violation is reported once. Policy and safety check overlapping conditions, so an unparseable
+  action produced `unparseable_action; unparseable_action`.
+- The domain examples stamp `eads.__version__` into `results.json` instead of a literal `1.0.0`.
+
+### Documentation
+
+- The demo, the Colab notebook, and the checked demo output run the conflicting-field attack.
+- Status pages describe the implemented code rather than the one under construction, the Zenodo
+  archive is no longer listed as absent, and `PUBLICATION.md` -- a second, contradictory release
+  guide -- is removed in favour of `docs/releasing.md`.
+
 ## [2.0.0] - 2026-08-04
 
 A major version because the interfaces a caller depends on changed, and because every module that

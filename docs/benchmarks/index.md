@@ -29,7 +29,7 @@ deterministic backend. No number on this page is evidence about a real LLM's beh
 - **Traces to:** Paper 2 (LASCI): evidence-grounded response to unstructured input
 - **Label:** Illustrative example
 - **Seed:** 5 · **Backend:** `fake` · **Repeats:** 3 · **Manifest digest:** `1698f96fc498c281`
-- **Produced by:** EADS 2.0.0
+- **Produced by:** EADS 2.0.1
 
 | Scenario | Expected | Observed | Reason |
 |---|---|---|---|
@@ -41,7 +41,7 @@ deterministic backend. No number on this page is evidence about a real LLM's beh
 - **Traces to:** Paper 4 (AGAF): permissions and approval routing
 - **Label:** Illustrative example
 - **Seed:** 13 · **Backend:** `fake` · **Repeats:** 3 · **Manifest digest:** `e9c1b1a0eef15884`
-- **Produced by:** EADS 2.0.0
+- **Produced by:** EADS 2.0.1
 
 | Scenario | Expected | Observed | Reason |
 |---|---|---|---|
@@ -53,7 +53,7 @@ deterministic backend. No number on this page is evidence about a real LLM's beh
 - **Traces to:** Paper 3 (LLM-DE): domain-independent decision filtering
 - **Label:** Illustrative example
 - **Seed:** 7 · **Backend:** `fake` · **Repeats:** 3 · **Manifest digest:** `ae16eae7761d6912`
-- **Produced by:** EADS 2.0.0
+- **Produced by:** EADS 2.0.1
 
 | Scenario | Expected | Observed | Reason |
 |---|---|---|---|
@@ -65,7 +65,7 @@ deterministic backend. No number on this page is evidence about a real LLM's beh
 - **Traces to:** Paper 1 (LRAATF): governance and validation of automated change
 - **Label:** Illustrative example
 - **Seed:** 21 · **Backend:** `fake` · **Repeats:** 3 · **Manifest digest:** `9cc70391abbf428b`
-- **Produced by:** EADS 2.0.0
+- **Produced by:** EADS 2.0.1
 
 | Scenario | Expected | Observed | Reason |
 |---|---|---|---|
@@ -77,7 +77,7 @@ deterministic backend. No number on this page is evidence about a real LLM's beh
 - **Traces to:** Paper 4 (AGAF): governance under autonomous operation; docs/threat_model.md T1. Added after the parser was found to resolve a conflicting field by position.
 - **Label:** Illustrative example
 - **Seed:** 42 · **Backend:** `ambiguous_injection` · **Repeats:** 3 · **Manifest digest:** `5f934c5ed40de364`
-- **Produced by:** EADS 2.0.0
+- **Produced by:** EADS 2.0.1
 
 | Scenario | Expected | Observed | Reason |
 |---|---|---|---|
@@ -89,7 +89,7 @@ deterministic backend. No number on this page is evidence about a real LLM's beh
 - **Traces to:** Paper 4 (AGAF): governance and trust under autonomous operation; docs/threat_model.md T1
 - **Label:** Illustrative example
 - **Seed:** 42 · **Backend:** `injection_prone` · **Repeats:** 3 · **Manifest digest:** `bba09e2e3f31747b`
-- **Produced by:** EADS 2.0.0
+- **Produced by:** EADS 2.0.1
 
 | Scenario | Expected | Observed | Reason |
 |---|---|---|---|
@@ -103,7 +103,7 @@ deterministic backend. No number on this page is evidence about a real LLM's beh
 - **Traces to:** Paper 3 (LLM-DE): safety-constrained decision filtering
 - **Label:** Illustrative example
 - **Seed:** 42 · **Backend:** `fake` · **Repeats:** 3 · **Manifest digest:** `097c13827547b60d`
-- **Produced by:** EADS 2.0.0
+- **Produced by:** EADS 2.0.1
 
 | Scenario | Expected | Observed | Reason |
 |---|---|---|---|
