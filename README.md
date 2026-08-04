@@ -107,7 +107,7 @@ The decision lifecycle is: **Sense / Ingest → Modernize / Extract → Reason /
 | `eads.core` | Reference implementation | Shared data model, pipeline contract, and plugin interface |
 | `eads.modernization` | Paper 1 | *Stub:* import/counting heuristics over legacy source, not a refactoring engine |
 | `eads.knowledge_ingestion` | Paper 2 | Lexical claim extraction with source spans, corroboration, and derived confidence |
-| `eads.reasoning` | Papers 2, 3 | *Stub:* fixed plan skeleton over the available evidence |
+| `eads.reasoning` | Papers 2, 3 | Multi-hop selection over the evidence graph, with contradiction reporting |
 | `eads.agents` | Papers 2, 4 | *Stub:* message-passing primitives; no autonomous collaboration |
 | `eads.decision` | Paper 3 | LLM + optimization + forecasting + safety filter |
 | `eads.governance` | Papers 1, 3, 4 | Policy, safety, permissions, fallback, audit, and trust |
@@ -216,13 +216,15 @@ reproduction of the papers. What is actually implemented:
   the fail-closed governance layer (policy, safety, permissions, escalation, fallback, audit,
   trust), reproducible records under a fixed clock, synthetic generators, and the benchmark harness
   with six metrics.
-- Stubs, despite tracing to a paper: `eads.modernization`, `eads.reasoning`, `eads.agents`, and
-  `TrustScorer` use counting or copying heuristics rather than the algorithms the papers describe.
-  Each says so in its docstring.
-- `eads.knowledge_ingestion` is implemented, but lexically: it extracts claims with source spans and
-  derives confidence, and it does not do coreference, negation scope, or entity linking.
+- Stubs, despite tracing to a paper: `eads.modernization`, `eads.agents`, and `TrustScorer` use
+  counting or copying heuristics rather than the algorithms the papers describe. Each says so in its
+  docstring.
+- `eads.knowledge_ingestion` and `eads.reasoning` are implemented, but lexically: claims carry source
+  spans and derived confidence, and planning walks a graph whose edges are shared entities and
+  matching figures. Neither does coreference, negation scope, or entity linking.
 - Not present: prompt/token logging, tool-invocation and latency metrics, a Zenodo DOI, a PyPI
-  release, verified paper DOIs, and any experimental result.
+  release, and any experimental result from the papers. The published benchmark numbers are
+  illustrative runs of this implementation, not paper results.
 
 Remaining work is tracked in [`docs/roadmap.md`](./docs/roadmap.md) and
 [`docs/limitations.md`](./docs/limitations.md).
