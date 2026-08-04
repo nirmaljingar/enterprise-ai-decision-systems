@@ -26,9 +26,7 @@ These trace to a paper but do not implement the paper's method. Each says so in 
 | Module | What it actually does |
 |--------|-----------------------|
 | `eads.modernization` | Counts imports and lines to suggest a decomposition; no refactoring or dependency analysis |
-| `eads.reasoning` | Emits a fixed plan skeleton over whatever evidence exists |
 | `eads.agents` | Message-passing primitives only; no autonomous collaboration or negotiation |
-| `eads.governance.trust` | Clamped self-reported confidence, halved for unparseable actions; not a calibrated hallucination measure |
 | `DecisionEngine` confidence | A fixed constant (`STUB_CONFIDENCE`), not a calibrated probability |
 
 ### Capabilities that are documented but absent
