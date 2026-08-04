@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "id": "it_operations_incident",
   "domain": "it_operations",
   "label": "Illustrative example",

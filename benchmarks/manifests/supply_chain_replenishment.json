@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "id": "supply_chain_replenishment",
   "domain": "supply_chain",
   "label": "Illustrative example",

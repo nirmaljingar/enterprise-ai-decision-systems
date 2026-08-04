@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "id": "customer_support_escalation",
   "domain": "customer_support",
   "label": "Illustrative example",
