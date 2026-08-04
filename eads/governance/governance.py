@@ -46,7 +46,10 @@ class GovernanceLayer:
         context = context or {}
         policy_violations = self.policy.evaluate(candidate, context)
         safety_violations = self.safety.check(candidate, context)
-        all_violations = policy_violations + safety_violations
+        # Policy and safety check overlapping conditions on purpose -- an unparseable action fails
+        # both -- so the same code can arrive twice. Repeating it in the reason implies two findings
+        # where there is one. Order is preserved: the first reason a reader sees stays first.
+        all_violations = list(dict.fromkeys(policy_violations + safety_violations))
         approvals = self.permissions.approvals(candidate, context, actor)
         # Trust is graded against the evidence record, not the candidate's self-report. It is a
         # signal for triage and audit and gates nothing: the checks below decide the outcome.
