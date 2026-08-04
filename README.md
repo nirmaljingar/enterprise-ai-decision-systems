@@ -1,17 +1,17 @@
 # Enterprise AI Decision Systems (EADS) — Research Companion
 
-[![Tests](https://github.com/eads-research/enterprise-ai-decision-systems/actions/workflows/tests.yml/badge.svg)](https://github.com/eads-research/enterprise-ai-decision-systems/actions/workflows/tests.yml)
-[![Docs](https://github.com/eads-research/enterprise-ai-decision-systems/actions/workflows/docs.yml/badge.svg)](https://github.com/eads-research/enterprise-ai-decision-systems/actions/workflows/docs.yml)
+[![Tests](https://github.com/nirmaljingar/enterprise-ai-decision-systems/actions/workflows/tests.yml/badge.svg)](https://github.com/nirmaljingar/enterprise-ai-decision-systems/actions/workflows/tests.yml)
+[![Docs](https://github.com/nirmaljingar/enterprise-ai-decision-systems/actions/workflows/docs.yml/badge.svg)](https://github.com/nirmaljingar/enterprise-ai-decision-systems/actions/workflows/docs.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](./LICENSE)
 [![PyPI](https://img.shields.io/badge/PyPI-v1.0.0-blue.svg)](https://pypi.org/project/enterprise-ai-decision-systems/)
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eads-research/enterprise-ai-decision-systems/blob/main/notebooks/eads_quickstart.ipynb)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nirmaljingar/enterprise-ai-decision-systems/blob/main/notebooks/eads_quickstart.ipynb)
 
 A reproducible, modular Python toolkit for building **reliable, safe, and auditable enterprise AI decisions** with large language models, safety filters, and governance.
 
 **Install and run in 60 seconds:**
 
 ```bash
-pip install git+https://github.com/eads-research/enterprise-ai-decision-systems.git
+pip install git+https://github.com/nirmaljingar/enterprise-ai-decision-systems.git
 python -c "
 from eads.core.pipeline import DecisionPipeline
 from eads.core.types import DecisionRequest
@@ -34,7 +34,7 @@ print('Trace:', [t['step'] for t in record.trace])
 ## Live demo
 
 - **60-second walkthrough:** [`docs/wow_demo.md`](./docs/wow_demo.md)
-- **Killer Colab notebook:** [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eads-research/enterprise-ai-decision-systems/blob/main/notebooks/eads_killer_demo.ipynb)
+- **Killer Colab notebook:** [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nirmaljingar/enterprise-ai-decision-systems/blob/main/notebooks/eads_killer_demo.ipynb)
 - **Quickstart notebook:** [`notebooks/eads_quickstart.ipynb`](./notebooks/eads_quickstart.ipynb)
 
 ## Mission

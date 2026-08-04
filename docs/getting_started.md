@@ -5,7 +5,7 @@ This tutorial walks through the EADS Research Companion in five minutes.
 ## 1. Install
 
 ```bash
-git clone https://github.com/eads-research/enterprise-ai-decision-systems.git
+git clone https://github.com/nirmaljingar/enterprise-ai-decision-systems.git
 cd enterprise-ai-decision-systems
 pip install -e ".[dev]"
 ```

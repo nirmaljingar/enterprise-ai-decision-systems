@@ -60,10 +60,10 @@ all = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/eads-research/enterprise-ai-decision-systems"
-Repository = "https://github.com/eads-research/enterprise-ai-decision-systems"
-Documentation = "https://eads-research.github.io/enterprise-ai-decision-systems"
-"Bug Tracker" = "https://github.com/eads-research/enterprise-ai-decision-systems/issues"
+Homepage = "https://github.com/nirmaljingar/enterprise-ai-decision-systems"
+Repository = "https://github.com/nirmaljingar/enterprise-ai-decision-systems"
+Documentation = "https://nirmaljingar.github.io/enterprise-ai-decision-systems"
+"Bug Tracker" = "https://github.com/nirmaljingar/enterprise-ai-decision-systems/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["eads"]

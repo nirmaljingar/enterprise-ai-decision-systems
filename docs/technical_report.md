@@ -32,7 +32,7 @@ All examples use synthetic data and deterministic seeds. The `Benchmark` harness
 
 ## 5. Artifacts for citation
 
-- Source code: `https://github.com/eads-research/enterprise-ai-decision-systems`
+- Source code: `https://github.com/nirmaljingar/enterprise-ai-decision-systems`
 - Citation metadata: `CITATION.cff`
 - Paper DOIs: see `CITING.md`
 - Reproducibility suite: `reproducibility/`

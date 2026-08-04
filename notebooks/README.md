@@ -6,7 +6,7 @@ This directory contains interactive examples for Google Colab and local Jupyter 
 
 Open the quickstart notebook in Colab:
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eads-research/enterprise-ai-decision-systems/blob/main/notebooks/eads_quickstart.ipynb)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nirmaljingar/enterprise-ai-decision-systems/blob/main/notebooks/eads_quickstart.ipynb)
 
 ## Notebooks
 

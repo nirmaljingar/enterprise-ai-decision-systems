@@ -12,7 +12,7 @@ Use this checklist when the repository is ready for a public launch.
 - [ ] GitHub release `v1.0.0` is tagged.
 - [ ] PyPI package is uploaded and the badge is verified.
 - [ ] Zenodo DOI is minted and added to `CITATION.cff`.
-- [ ] Docs site is live at `https://eads-research.github.io/enterprise-ai-decision-systems`.
+- [ ] Docs site is live at `https://nirmaljingar.github.io/enterprise-ai-decision-systems`.
 - [ ] Colab notebook opens without errors.
 
 ## Announcements

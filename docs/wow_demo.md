@@ -5,7 +5,7 @@ Turn unstructured enterprise signals into an **auditable, explainable decision**
 ## Install and run
 
 ```bash
-pip install git+https://github.com/eads-research/enterprise-ai-decision-systems.git
+pip install git+https://github.com/nirmaljingar/enterprise-ai-decision-systems.git
 python examples/quickstart.py
 ```
 
@@ -46,6 +46,6 @@ Saved to benchmarks/results/supply_chain/results.json
 ## Try it yourself
 
 - **Notebook:** `notebooks/eads_killer_demo.ipynb` — an end-to-end Colab-ready walkthrough with a single decision + full benchmark.
-- **Colab:** [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eads-research/enterprise-ai-decision-systems/blob/main/notebooks/eads_killer_demo.ipynb)
+- **Colab:** [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nirmaljingar/enterprise-ai-decision-systems/blob/main/notebooks/eads_killer_demo.ipynb)
 - **Getting started:** [`docs/getting_started.md`](./getting_started.md)
 - **Examples:** `examples/healthcare.py`, `examples/finance.py`, `examples/it_operations.py`, `examples/customer_support.py`
