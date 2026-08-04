@@ -13,6 +13,11 @@ cannot do is stated per module in [Limitations](limitations.md).
 - [Tutorials](tutorials/README.md), [Examples](examples/README.md),
   [Benchmarks](benchmarks/index.md).
 
+If you want the governance boundary and nothing else, it is packaged separately as
+[typedguard](https://github.com/nirmaljingar/typedguard) (`pip install typedguard`, no
+dependencies) — a distillation of the idea rather than a re-export of this code. The benchmark
+numbers on this site are produced here, not there.
+
 Run the quickstart:
 
 ```bash
