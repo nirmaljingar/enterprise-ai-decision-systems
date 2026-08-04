@@ -1,0 +1,29 @@
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.env
+venv/
+
+# macOS
+.DS_Store
+.python-version
+
+# Tool caches
+.ruff_cache/
+
+# Documentation build output
+site/
+
+# Generated outputs
+benchmarks/results/
+reproducibility/results.json
+docs/assets/*.txt
+*.log
+
+# Licensed source papers — full text is not redistributed
+data/papers/*.pdf
+data/papers/extracted/

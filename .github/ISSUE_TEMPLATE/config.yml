@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Research question or discussion
+    url: https://github.com/owner/enterprise-ai-decision-systems/discussions
+    about: Ask questions about the research design, paper interpretations, or extensions.
+  - name: Citation guidance
+    url: https://github.com/owner/enterprise-ai-decision-systems/blob/main/CITING.md
+    about: See CITING.md for how to cite the papers and this repository.

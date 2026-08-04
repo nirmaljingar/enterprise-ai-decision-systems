@@ -1,0 +1,54 @@
+[
+  {
+    "id": "paper1_lraatf",
+    "acronym": "LRAATF",
+    "title": "Modernizing Legacy Enterprise Platforms Using LLM-Driven Refactoring and AI-Assisted Architecture Transformation",
+    "authors": ["Nirmal Kumar Jingar"],
+    "author_note": "See the DOI for the complete author list.",
+    "doi": "10.1109/TTS.2024.3403681",
+    "url": "https://doi.org/10.1109/TTS.2024.3403681",
+    "venue": "IEEE Transactions on Technology and Society",
+    "year": 2024,
+    "open_access": false,
+    "modules": ["eads.modernization", "eads.governance"]
+  },
+  {
+    "id": "paper2_lasci",
+    "acronym": "LASCI",
+    "title": "Leveraging Large Language Models and Autonomous Agents for Unstructured Supply Chain Intelligence",
+    "authors": ["Nirmal Kumar Jingar"],
+    "author_note": "See the DOI for the complete author list.",
+    "doi": "10.1109/ACCESS.2025.3605837",
+    "url": "https://doi.org/10.1109/ACCESS.2025.3605837",
+    "venue": "IEEE Access",
+    "year": 2025,
+    "open_access": true,
+    "modules": ["eads.knowledge_ingestion", "eads.agents"]
+  },
+  {
+    "id": "paper3_llm_de",
+    "acronym": "LLM-DE",
+    "title": "Reliable LLM-Powered Decision Engines for Large-Scale Supply Chain Operations: Architecture, Safety, and Performance Guarantees",
+    "authors": ["Nirmal Kumar Jingar"],
+    "author_note": "See the DOI for the complete author list.",
+    "doi": "10.1109/TEM.2025.3567302",
+    "url": "https://doi.org/10.1109/TEM.2025.3567302",
+    "venue": "IEEE Transactions on Engineering Management",
+    "year": 2025,
+    "open_access": false,
+    "modules": ["eads.decision", "eads.governance"]
+  },
+  {
+    "id": "paper4_agaf",
+    "acronym": "AGAF",
+    "title": "Operationalizing Generative and Agentic AI Across Complex Logistics Networks: Architecture, Governance, and Trust Models",
+    "authors": ["Nirmal Kumar Jingar"],
+    "author_note": "See the DOI for the complete author list.",
+    "doi": "10.1109/ACCESS.2025.3585783",
+    "url": "https://doi.org/10.1109/ACCESS.2025.3585783",
+    "venue": "IEEE Access",
+    "year": 2025,
+    "open_access": true,
+    "modules": ["eads.governance", "eads.agents"]
+  }
+]

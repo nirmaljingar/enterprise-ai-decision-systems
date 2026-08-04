@@ -1,0 +1,35 @@
+site_name: Enterprise AI Decision Systems
+site_description: Open, reproducible research companion to the IEEE EADS papers.
+site_author: EADS Research Companion Project
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed
+  - admonition
+  - toc:
+      permalink: true
+nav:
+  - Home: index.md
+  - Research Design: research_design.md
+  - Architecture: architecture.md
+  - Module Mapping: module_mapping.md
+  - Evaluation: evaluation.md
+  - Tutorials: tutorials/
+  - Examples: examples/
+  - Benchmarks: benchmarks/index.md
+  - FAQ: FAQ.md
+  - Limitations: limitations.md
+  - Security: security.md
+  - Future Research: future_research.md
+  - Roadmap: roadmap.md

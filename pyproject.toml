@@ -1,0 +1,78 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "enterprise-ai-decision-systems"
+version = "1.0.0"
+description = "A reproducible, modular research companion for reliable Enterprise AI Decision Systems."
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.11"
+authors = [{name = "Nirmal Kumar Jingar"}]
+keywords = [
+    "enterprise ai",
+    "large language models",
+    "multi-agent systems",
+    "decision systems",
+    "supply chain intelligence",
+    "legacy modernization",
+    "governance",
+    "reproducible research",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = ["pydantic>=2.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.4", "mypy>=1.10", "coverage>=7.0"]
+docs = ["pydantic>=2.0", "mkdocs-material>=9.5", "mkdocs>=1.6", "pymdown-extensions>=10.0"]
+openai = ["pydantic>=2.0", "openai>=1.0"]
+anthropic = ["pydantic>=2.0", "anthropic>=0.30"]
+ollama = ["pydantic>=2.0", "ollama>=0.2"]
+transformers = ["pydantic>=2.0", "transformers>=4.40", "torch>=2.0"]
+solvers = ["pydantic>=2.0", "scipy>=1.12", "pulp>=2.8", "ortools>=9.9", "scikit-learn>=1.4"]
+forecasters = ["sktime>=0.30", "pandas>=2.0", "numpy>=1.26"]
+pdf = ["pymupdf>=1.24"]
+all = [
+    "pydantic>=2.0",
+    "openai>=1.0",
+    "anthropic>=0.30",
+    "ollama>=0.2",
+    "transformers>=4.40",
+    "torch>=2.0",
+    "scipy>=1.12",
+    "pulp>=2.8",
+    "ortools>=9.9",
+    "scikit-learn>=1.4",
+    "sktime>=0.30",
+    "pandas>=2.0",
+    "numpy>=1.26",
+    "pymupdf>=1.24",
+]
+
+[project.urls]
+Homepage = "https://github.com/eads-research/enterprise-ai-decision-systems"
+Repository = "https://github.com/eads-research/enterprise-ai-decision-systems"
+Documentation = "https://eads-research.github.io/enterprise-ai-decision-systems"
+"Bug Tracker" = "https://github.com/eads-research/enterprise-ai-decision-systems/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["eads"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
