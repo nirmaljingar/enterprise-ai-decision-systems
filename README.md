@@ -216,9 +216,12 @@ reproduction of the papers. What is actually implemented:
   the fail-closed governance layer (policy, safety, permissions, escalation, fallback, audit,
   trust), reproducible records under a fixed clock, synthetic generators, and the benchmark harness
   with six metrics.
-- Stubs, despite tracing to a paper: `eads.modernization`, `eads.agents`, and `TrustScorer` use
-  counting or copying heuristics rather than the algorithms the papers describe. Each says so in its
+- Stubs, despite tracing to a paper: `eads.modernization` and `eads.agents` use counting or
+  fixed-reply heuristics rather than the algorithms the papers describe. Each says so in its
   docstring.
+- `TrustScorer` grades a candidate against the evidence it cites -- resolution, quantity support,
+  source trust, contradictions -- and names every deduction. It is not a calibrated hallucination
+  probability, and it gates nothing: governance decides outcomes and fails closed regardless.
 - `eads.knowledge_ingestion` and `eads.reasoning` are implemented, but lexically: claims carry source
   spans and derived confidence, and planning walks a graph whose edges are shared entities and
   matching figures. Neither does coreference, negation scope, or entity linking.
