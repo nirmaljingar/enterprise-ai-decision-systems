@@ -53,14 +53,15 @@ This repository becomes the official open companion to that research: it supplie
 
 ## The four IEEE papers
 
-| Paper | Identifier | DOI | Contribution in this repo |
-|-------|------------|-----|---------------------------|
-| Modernizing Legacy Enterprise Platforms Using LLM-Driven Refactoring and AI-Assisted Architecture Transformation | Paper 1 | `10.1109/TTS.2024.3403681` | `eads.modernization` — legacy parsing, dependency extraction, monolith-to-microservice decomposition |
-| Leveraging Large Language Models and Autonomous Agents for Unstructured Supply Chain Intelligence | Paper 2 | `10.1109/ACCESS.2025.3605837` | `eads.knowledge_ingestion`, `eads.reasoning`, `eads.agents` — semantic extraction, evidence grounding, multi-agent collaboration |
-| Reliable LLM-Powered Decision Engines for Large-Scale Supply Chain Operations: Architecture, Safety, and Performance Guarantees | Paper 3 | `10.1109/TEM.2025.3567302` | `eads.decision`, `eads.governance.safety` — LLM decision engine, mathematical optimization, safety filtering |
-| Operationalizing Generative and Agentic AI Across Complex Logistics Networks: Architecture, Governance, and Trust Models | Paper 4 | `10.1109/ACCESS.2025.3585783` | `eads.governance` — policy, permissions, fallback, audit, and trust scoring |
+| Paper | Identifier | Publication status | Contribution in this repo |
+|-------|------------|--------------------|---------------------------|
+| Modernizing Legacy Enterprise Platforms Using LLM-Driven Refactoring and AI-Assisted Architecture Transformation | Paper 1 | Unpublished — no verified DOI | `eads.modernization` — legacy parsing, dependency extraction, monolith-to-microservice decomposition |
+| Leveraging Large Language Models and Autonomous Agents for Unstructured Supply Chain Intelligence | Paper 2 | Unpublished — no verified DOI | `eads.knowledge_ingestion`, `eads.reasoning`, `eads.agents` — semantic extraction, evidence grounding, multi-agent collaboration |
+| Reliable LLM-Powered Decision Engines for Large-Scale Supply Chain Operations: Architecture, Safety, and Performance Guarantees | Paper 3 | Unpublished — no verified DOI | `eads.decision`, `eads.governance.safety` — LLM decision engine, mathematical optimization, safety filtering |
+| Operationalizing Generative and Agentic AI Across Complex Logistics Networks: Architecture, Governance, and Trust Models | Paper 4 | Unpublished — no verified DOI | `eads.governance` — policy, permissions, fallback, audit, and trust scoring |
 
-See [`CITING.md`](./CITING.md) for full citation guidance and [`docs/research_design.md`](./docs/research_design.md) for the complete research design.
+DOIs are deliberately absent: no DOI is listed until it has been checked against the publisher's
+record. See [`CITING.md`](./CITING.md) for full citation guidance and [`docs/research_design.md`](./docs/research_design.md) for the complete research design.
 
 ## Why this repository matters
 
