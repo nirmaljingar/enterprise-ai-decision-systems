@@ -23,7 +23,7 @@ def main() -> None:
     out.parent.mkdir(exist_ok=True)
 
     summary = {
-        "tests": run("python3 -m tests.run_tests"),
+        "tests": run("python3 -m pytest -q"),
         "examples": run("PYTHONPATH=. python3 examples/supply_chain.py"),
         "extras": run("PYTHONPATH=. python3 scripts/validate_extras.py"),
         "llms": run("PYTHONPATH=. python3 scripts/validate_llms.py"),

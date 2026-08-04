@@ -4,25 +4,32 @@ This page defines the metrics, benchmark harness, and measurement methodology fo
 
 ## Metrics
 
-| Metric | Definition | Measurement methodology | Paper link | Status |
-|--------|------------|------------------------|------------|--------|
-| **Decision Consistency** | Variance of the same decision under repeated execution with fixed inputs | Re-run decision workflow `n` times on an identical synthetic scenario with a fixed seed | Paper 3 | Published methodology |
-| **Policy Compliance** | Fraction of decisions passing the policy/safety filter | Automated rule evaluation on synthetic cases | Papers 3, 4 | Published methodology |
-| **Evidence Grounding Rate** | Fraction of claims supported by extracted evidence with a retrievable source | Compare reasoning output to the evidence graph | Paper 2 | Published methodology |
-| **Fallback Recovery Rate** | Fraction of unsafe or unauthorized decisions correctly caught and recovered | Inject known constraint violations and measure recovery | Papers 3, 4 | Published methodology |
-| **Audit Completeness** | Fraction of decision events containing all required trace fields | Schema validation of audit records | Paper 4 | Published methodology |
-| **Tool Invocation Precision** | Correct tool selected divided by total tool invocations | Manual or programmatic schema matching against the planned workflow | Paper 3 | Suggested extension |
-| **Decision Latency** | End-to-end time from input to executable decision | Instrument the pipeline | Paper 3 | Suggested extension |
-| **Token Efficiency** | Tokens consumed per unit of useful output | Count prompt and completion tokens | Papers 1–3 | Suggested extension |
+Every metric below is a function in `eads.evaluation.metrics` taking the run summaries emitted by
+`Benchmark`. Scenarios may carry an `expected_outcome` label (`approved`, `rejected`, or
+`escalated`); metrics that need ground truth use only labelled runs.
 
-> No numerical results or experimental claims are fabricated. Metrics are labeled either as `Published methodology` (derived from a paper concept) or `Suggested extension` (reference implementation demonstrating how the metric could be measured).
+| Metric | Definition | Measurement methodology | Paper link | Implemented |
+|--------|------------|------------------------|------------|-------------|
+| `approval_rate` | Fraction of runs approved for execution | Count approved verdicts | — | Yes. Throughput only — a pipeline that approves everything scores 1.0 |
+| `policy_compliance` | Fraction of labelled runs whose outcome matched the expected outcome | Compare verdict outcome against the scenario label | Papers 3, 4 | Yes. Correctly blocking an unsafe decision *raises* this score |
+| `decision_consistency` | Agreement of outcome across repeated runs of one scenario | Run each scenario `repeats` times with fixed seed and clock; compare | Paper 3 | Yes. Raises `ValueError` if handed more than one scenario |
+| `evidence_grounding_rate` | Fraction of evidence references that resolve to evidence the run produced | Resolve `decision.evidence_refs` against ingested evidence ids | Paper 2 | Yes. A decision citing nothing scores 0.0 |
+| `fallback_recovery_rate` | Fraction of runs expected to be withheld that were withheld | Label violating scenarios; check execution was blocked or escalated | Papers 3, 4 | Yes |
+| `audit_completeness` | Fraction of runs whose audit record carries every required trace field | Field presence check over `AuditRecord` | Paper 4 | Yes |
+| Tool Invocation Precision | Correct tool selected divided by total tool invocations | Schema matching against the planned workflow | Paper 3 | No — suggested extension |
+| Decision Latency | End-to-end time from input to executable decision | Instrument the pipeline | Paper 3 | No — suggested extension |
+| Token Efficiency | Tokens consumed per unit of useful output | Count prompt and completion tokens | Papers 1–3 | No — token accounting is not implemented |
+
+> No numerical results or experimental claims are fabricated. Metrics marked "No" are documented
+> targets, not code.
 
 ## Running benchmarks
 
 ```bash
 pip install -e ".[dev]"
-pytest tests/evaluation
+pytest tests/test_evaluation.py
 python examples/supply_chain.py
 ```
 
-Benchmark manifests live in `benchmarks/` and each is labeled `Published methodology` or `Illustrative example`. Results are emitted to `benchmarks/results/` and archived under `docs/benchmarks/archive/` for each release.
+Benchmark manifests live in `benchmarks/` and each is labeled `Published methodology` or
+`Illustrative example`. Results are emitted to `benchmarks/results/`.

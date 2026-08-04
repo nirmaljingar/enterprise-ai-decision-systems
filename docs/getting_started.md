@@ -54,7 +54,7 @@ Each example uses synthetic data and writes results to `benchmarks/results/`.
 ## 4. Run tests
 
 ```bash
-python3 -m tests.run_tests
+python3 -m pytest -q
 ```
 
 ## 5. Reproducibility

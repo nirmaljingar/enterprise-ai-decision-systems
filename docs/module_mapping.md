@@ -11,7 +11,7 @@ Every `eads.*` module either traces to one or more IEEE EADS papers or is explic
 | `eads.agents` | Papers 2, 4 | LASCI multi-agent verification; AGAF agentic decision layer | Multi-agent collaboration primitives, consensus-seeking, tool-calling, message passing |
 | `eads.decision` | Paper 3 | LLM-DE / LLM-SSC: LLM reasoning + optimization + forecasting + safety filter | Generate candidate decisions by combining semantic reasoning with solver/forecaster adapters |
 | `eads.governance` | Papers 1, 3, 4 | Governance, Validation and Trust Layer / AGAF trust layer | Policy enforcement, safety filtering, permissions, fallback, audit, and trust scoring |
-| `eads.core` | Reference implementation | Shared data model, pipeline contract, and public API surface | Pydantic/dataclass schemas, deterministic orchestration primitives, public plugin interface |
+| `eads.core` | Reference implementation | Shared data model, pipeline contract, and public API surface | Dataclass schemas, deterministic orchestration primitives, public plugin interface |
 | `eads.evaluation` | Papers 1–4 | LRAATF/LASCI/LLM-DE/AGAF experimental metrics | Reusable benchmark harness and metric definitions |
 | `eads.synthetic_data` | All | Domain-agnostic synthetic datasets | Supply chain, healthcare, finance, customer support, and IT operations examples |
 | `examples/` | All | End-to-end educational workflows | Reference implementations that demonstrate the decision lifecycle |

@@ -7,6 +7,7 @@ build/
 .mypy_cache/
 .env
 venv/
+.venv/
 
 # macOS
 .DS_Store
@@ -27,3 +28,5 @@ docs/assets/*.txt
 # Licensed source papers — full text is not redistributed
 data/papers/*.pdf
 data/papers/extracted/
+.coverage
+coverage.xml

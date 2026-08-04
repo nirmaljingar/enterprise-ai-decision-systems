@@ -116,7 +116,12 @@ class DecisionPipeline:
             trace.append({"step": "modernize", "evidence": len(modernization_evidence)})
         trace.extend(
             [
-                {"step": "ingest", "signals": len(request.signals), "evidence": len(evidence)},
+                {
+                    "step": "ingest",
+                    "signals": len(request.signals),
+                    "evidence": len(evidence),
+                    "evidence_ids": [e.id for e in evidence],
+                },
                 {
                     "step": "reason",
                     "plan_id": plan.plan_id,
