@@ -25,7 +25,6 @@ These trace to a paper but do not implement the paper's method. Each says so in 
 
 | Module | What it actually does |
 |--------|-----------------------|
-| `eads.modernization` | Counts imports and lines to suggest a decomposition; no refactoring or dependency analysis |
 | `eads.agents` | Message-passing primitives only; no autonomous collaboration or negotiation |
 | `DecisionEngine` confidence | A fixed constant (`STUB_CONFIDENCE`), not a calibrated probability |
 

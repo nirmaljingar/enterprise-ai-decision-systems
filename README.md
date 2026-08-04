@@ -105,7 +105,7 @@ The decision lifecycle is: **Sense / Ingest → Modernize / Extract → Reason /
 | Module | Traced to | Responsibility |
 |--------|-----------|--------------|
 | `eads.core` | Reference implementation | Shared data model, pipeline contract, and plugin interface |
-| `eads.modernization` | Paper 1 | *Stub:* import/counting heuristics over legacy source, not a refactoring engine |
+| `eads.modernization` | Paper 1 | `ast` dependency graph and connected-component service boundaries; no refactoring |
 | `eads.knowledge_ingestion` | Paper 2 | Lexical claim extraction with source spans, corroboration, and derived confidence |
 | `eads.reasoning` | Papers 2, 3 | Multi-hop selection over the evidence graph, with contradiction reporting |
 | `eads.agents` | Papers 2, 4 | *Stub:* message-passing primitives; no autonomous collaboration |
@@ -216,9 +216,11 @@ reproduction of the papers. What is actually implemented:
   the fail-closed governance layer (policy, safety, permissions, escalation, fallback, audit,
   trust), reproducible records under a fixed clock, synthetic generators, and the benchmark harness
   with six metrics.
-- Stubs, despite tracing to a paper: `eads.modernization` and `eads.agents` use counting or
-  fixed-reply heuristics rather than the algorithms the papers describe. Each says so in its
-  docstring.
+- A stub, despite tracing to a paper: `eads.agents` fans out fixed replies rather than collaborating.
+  It says so in its docstring.
+- `eads.modernization` analyses real Python with `ast` and proposes boundaries from the dependency
+  graph, reporting the edges each cut would sever. It does not refactor or generate code, and its call
+  graph does not resolve aliases or dynamic dispatch.
 - `TrustScorer` grades a candidate against the evidence it cites -- resolution, quantity support,
   source trust, contradictions -- and names every deduction. It is not a calibrated hallucination
   probability, and it gates nothing: governance decides outcomes and fails closed regardless.
