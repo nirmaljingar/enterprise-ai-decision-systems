@@ -50,9 +50,13 @@ them](./docs/benchmarks/about.md).
 ```bash
 git clone https://github.com/nirmaljingar/enterprise-ai-decision-systems.git
 cd enterprise-ai-decision-systems && pip install -e ".[dev]"
+python examples/injection_demo.py   # the naive guard and this one, on the same compromised model
 python scripts/run_benchmarks.py    # regenerates docs/benchmarks/index.md, injection scenario included
 pytest tests/test_runner.py         # asserts every scenario reaches its declared outcome
 ```
+
+Or in Colab, cell by cell:
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nirmaljingar/enterprise-ai-decision-systems/blob/main/notebooks/eads_killer_demo.ipynb)
 
 Every run is seeded and clock-injected, so a rerun is byte-identical and a published number can be
 disputed. Adding your own attack takes one JSON file:
