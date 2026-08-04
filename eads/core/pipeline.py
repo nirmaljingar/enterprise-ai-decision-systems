@@ -59,7 +59,7 @@ class DecisionPipeline:
         evidence = self.ingestion.ingest(non_legacy_signals) + modernization_evidence
         plan = self.reasoning.plan(evidence, request.goal)
         candidate = self.decision_engine.generate(request, plan=plan)
-        verdict = self._review(candidate, request)
+        verdict = self._review(candidate, request, evidence)
         execution = self._execute(candidate, verdict, request.actor)
         record.decision = candidate
         record.verdict = verdict
@@ -94,8 +94,15 @@ class DecisionPipeline:
             )
         return evidence
 
-    def _review(self, candidate: DecisionCandidate, request: DecisionRequest) -> Verdict:
-        return self.governance.review(candidate, request.policy_snapshot, request.actor)
+    def _review(
+        self,
+        candidate: DecisionCandidate,
+        request: DecisionRequest,
+        evidence: list[Evidence],
+    ) -> Verdict:
+        return self.governance.review(
+            candidate, request.policy_snapshot, request.actor, evidence
+        )
 
     def _execute(
         self, candidate: DecisionCandidate, verdict: Verdict, actor: Actor
@@ -154,6 +161,8 @@ class DecisionPipeline:
                     "approved": verdict.approved,
                     "reason": verdict.reason,
                     "policy_snapshot_id": policy_snapshot_id(request.policy_snapshot),
+                    "trust_score": verdict.trust_score,
+                    "trust_reasons": verdict.trust_reasons,
                     "actor": request.actor.id,
                     "awaiting_roles": [
                         approval.approver_role for approval in verdict.required_approvals

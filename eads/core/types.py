@@ -141,6 +141,8 @@ class Verdict:
     required_approvals: list[ApprovalRequirement] = field(default_factory=list)
     trust_score: float = 0.0
     outcome: str = APPROVED
+    trust_reasons: list[str] = field(default_factory=list)
+    """Named deductions behind ``trust_score``, so a low score can be explained."""
 
 
 @dataclass
