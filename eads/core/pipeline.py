@@ -1,3 +1,4 @@
+from dataclasses import asdict
 from typing import Any
 
 from ..decision.decision import DecisionEngine
@@ -95,11 +96,11 @@ class DecisionPipeline:
                 output={"reason": verdict.reason},
                 latency_ms=0.0,
             )
-        action_id = candidate.actions[0].get("type", "action") if candidate.actions else "none"
+        action_id = candidate.actions[0].type if candidate.actions else "none"
         return ExecutionResult(
             action_id=action_id,
             status="success",
-            output={"executed": True, "actions": candidate.actions},
+            output={"executed": True, "actions": [asdict(a) for a in candidate.actions]},
             latency_ms=1.0,
         )
 
@@ -126,7 +127,7 @@ class DecisionPipeline:
                 },
                 {
                     "step": "generate",
-                    "actions": candidate.actions,
+                    "actions": [asdict(a) for a in candidate.actions],
                     "evidence_refs": candidate.evidence_refs,
                 },
                 {"step": "verdict", "approved": verdict.approved, "reason": verdict.reason},

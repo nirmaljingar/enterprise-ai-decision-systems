@@ -3,6 +3,7 @@ from eads.core.types import (
     DecisionCandidate,
     DecisionRequest,
     Evidence,
+    ProposedAction,
     Signal,
 )
 from eads.decision.decision import DecisionEngine
@@ -63,7 +64,8 @@ def test_decision_engine_generates_candidate():
     )
     engine = DecisionEngine()
     candidate = engine.generate(request)
-    assert candidate.actions[0]["type"] == "decision"
+    assert candidate.actions[0].type == "order"
+    assert candidate.actions[0].parsed
     assert candidate.confidence > 0
 
 
@@ -71,7 +73,15 @@ def test_governance_blocks_high_value_order():
     g = GovernanceLayer()
     candidate = DecisionCandidate(
         plan_id="p1",
-        actions=[{"type": "order", "value": "order_quantity=600"}],
+        actions=[
+            ProposedAction(
+                type="order",
+                raw_value="order_quantity=600",
+                quantity=600,
+                region="US",
+                parsed=True,
+            )
+        ],
         confidence=0.5,
     )
     verdict = g.review(candidate, {"unit_price": 10.0})

@@ -39,10 +39,27 @@ class Plan:
     evidence_refs: list[str] = field(default_factory=list)
 
 
+@dataclass(frozen=True)
+class ProposedAction:
+    """A model proposal after parsing, in the form the governance layer can check.
+
+    ``parsed`` records whether the model output matched a known action grammar. Governance
+    rejects actions with ``parsed is False``: an action that cannot be understood cannot be
+    proven safe.
+    """
+
+    type: str
+    raw_value: str
+    quantity: int | None = None
+    region: str | None = None
+    label: str | None = None
+    parsed: bool = False
+
+
 @dataclass
 class DecisionCandidate:
     plan_id: str
-    actions: list[dict[str, Any]]
+    actions: list[ProposedAction]
     expected_outcome: dict[str, Any] = field(default_factory=dict)
     evidence_refs: list[str] = field(default_factory=list)
     confidence: float = 0.0

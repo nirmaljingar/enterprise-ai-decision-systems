@@ -2,6 +2,14 @@
 from ..core.adapters import FakeLLM, LLMBackend
 from ..core.types import DecisionCandidate, DecisionRequest, Plan
 from .adapters import ForecasterBackend, SolverBackend
+from .parsing import parse_action
+
+STUB_CONFIDENCE = 0.9
+"""Placeholder self-reported confidence.
+
+This is a fixed constant, not a calibrated probability. It exists so the data model has a
+confidence field to carry; do not read it as an accuracy estimate.
+"""
 
 
 class DecisionEngine:
@@ -38,11 +46,12 @@ class DecisionEngine:
         if self.forecaster is not None:
             expected_outcome.update(self.forecaster.forecast(request, plan))
 
-        actions = [{"type": "decision", "value": response}]
+        region_default = request.policy_snapshot.get("region")
+        actions = [parse_action(response, region_default=region_default)]
         return DecisionCandidate(
             plan_id=request.request_id,
             actions=actions,
             expected_outcome=expected_outcome,
             evidence_refs=evidence_refs,
-            confidence=0.9,
+            confidence=STUB_CONFIDENCE,
         )
