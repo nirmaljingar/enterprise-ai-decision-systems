@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any
 
 from .. import __version__
-from ..core.attack import InjectionProneLLM
+from ..core.attack import AmbiguousInjectionLLM, InjectionProneLLM
 from ..core.clock import FixedClock
 from ..core.pipeline import DecisionPipeline
 from ..core.types import Actor, DecisionRequest, Signal
@@ -43,7 +43,7 @@ GENERATORS: dict[str, type[BaseGenerator]] = {
 }
 LABELS = frozenset({"Published methodology", "Illustrative example"})
 FIXED_TIMESTAMP = "2026-01-01T00:00:00Z"
-BACKENDS = frozenset({"fake", "injection_prone"})
+BACKENDS = frozenset({"ambiguous_injection", "fake", "injection_prone"})
 SCHEMA_VERSION = 1
 """The manifest format this runner accepts.
 
@@ -138,6 +138,8 @@ class Manifest:
 def _engine(backend: str) -> DecisionEngine:
     if backend == "injection_prone":
         return DecisionEngine(llm=InjectionProneLLM())
+    if backend == "ambiguous_injection":
+        return DecisionEngine(llm=AmbiguousInjectionLLM())
     return DecisionEngine()
 
 
