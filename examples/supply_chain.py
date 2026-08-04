@@ -19,7 +19,7 @@ def main():
                 request_id="sc-1",
                 goal="replenish SKU-1001",
                 signals=gen.generate(3),
-                policy_snapshot={"max_order_quantity": 1000, "unit_price": 10.0},
+                policy_snapshot={"max_order_quantity": 1000, "unit_price": 10.0, "region": "US"},
             ),
         },
         {
@@ -28,7 +28,7 @@ def main():
                 request_id="sc-2",
                 goal="emergency purchase for SKU-1001",
                 signals=gen.generate(3),
-                policy_snapshot={"max_order_quantity": 50, "unit_price": 10.0},
+                policy_snapshot={"max_order_quantity": 50, "unit_price": 10.0, "region": "US"},
             ),
         },
     ]

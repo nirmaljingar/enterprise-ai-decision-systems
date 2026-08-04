@@ -12,6 +12,7 @@ def main():
         request_id="demo-1",
         goal="decide replenishment order for SKU-1001",
         signals=signals,
+        policy_snapshot={"region": "US"},
     )
     engine = DecisionEngine()
     governance = GovernanceLayer()

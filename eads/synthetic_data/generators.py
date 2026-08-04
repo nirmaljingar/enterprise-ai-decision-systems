@@ -1,17 +1,23 @@
 import random
 from typing import ClassVar
 
+from ..core.clock import Clock, system_clock
 from ..core.types import Signal
 
 
 class BaseGenerator:
-    """Deterministic base for synthetic enterprise signal generators."""
+    """Deterministic base for synthetic enterprise signal generators.
+
+    Pass a fixed *clock* (see :class:`eads.core.clock.FixedClock`) to make generated signals
+    byte-identical across runs; the default wall clock leaves timestamps varying.
+    """
 
     source: str = "synthetic"
     templates: ClassVar[list[str]] = []
 
-    def __init__(self, seed: int = 42):
+    def __init__(self, seed: int = 42, clock: Clock = system_clock):
         self.rng = random.Random(seed)
+        self.clock = clock
 
     def generate(self, n: int = 3) -> list[Signal]:
         signals = []
@@ -23,6 +29,7 @@ class BaseGenerator:
                     source=self.source,
                     content=template,
                     metadata={"index": i},
+                    timestamp=self.clock(),
                 )
             )
         return signals

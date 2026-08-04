@@ -1,6 +1,6 @@
 from typing import Any
 
-from ..core.types import DecisionCandidate, Verdict
+from ..core.types import APPROVED, ESCALATED, REJECTED, DecisionCandidate, Verdict
 from .audit import AuditLogger
 from .fallback import FallbackHandler
 from .permissions import PermissionGate
@@ -37,12 +37,21 @@ class GovernanceLayer:
         all_violations = policy_violations + safety_violations
         approvals = self.permissions.approvals(candidate, context)
         trust = self.trust.score(candidate, context)
-        approved = not all_violations and not approvals
-        reason = "passed" if approved else "; ".join(all_violations + approvals)
+        if all_violations:
+            # A violation is terminal: no approval can authorize an unsafe action.
+            outcome = REJECTED
+            reason = "; ".join(all_violations)
+        elif approvals:
+            outcome = ESCALATED
+            reason = "; ".join(approvals)
+        else:
+            outcome = APPROVED
+            reason = "passed"
         return Verdict(
-            approved=approved,
+            approved=outcome == APPROVED,
             reason=reason,
             violated_policies=all_violations,
             required_approvals=approvals,
             trust_score=trust,
+            outcome=outcome,
         )

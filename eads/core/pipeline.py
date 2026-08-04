@@ -1,3 +1,4 @@
+from dataclasses import asdict
 from typing import Any
 
 from ..decision.decision import DecisionEngine
@@ -6,6 +7,7 @@ from ..knowledge_ingestion.ingestion import IngestionPipeline
 from ..modernization.modernization import ModernizationPipeline
 from ..reasoning.reasoning import ReasoningEngine
 from .adapters import FakeLLM, LLMBackend
+from .clock import Clock, system_clock
 from .types import (
     AuditRecord,
     DecisionCandidate,
@@ -29,6 +31,7 @@ class DecisionPipeline:
         reasoning: ReasoningEngine | None = None,
         decision_engine: DecisionEngine | None = None,
         governance: GovernanceLayer | None = None,
+        clock: Clock = system_clock,
     ):
         self.llm = llm or FakeLLM()
         self.ingestion = ingestion or IngestionPipeline()
@@ -36,9 +39,10 @@ class DecisionPipeline:
         self.reasoning = reasoning or ReasoningEngine()
         self.decision_engine = decision_engine or DecisionEngine(llm=self.llm)
         self.governance = governance or GovernanceLayer()
+        self.clock = clock
 
     def run(self, request: DecisionRequest) -> AuditRecord:
-        record = AuditRecord(request_id=request.request_id)
+        record = AuditRecord(request_id=request.request_id, timestamp=self.clock())
         legacy_signals = [
             s for s in request.signals if s.metadata.get("source_type") == "legacy_code"
         ]
@@ -62,6 +66,7 @@ class DecisionPipeline:
             verdict,
             execution,
         )
+        self.governance.audit.log(record)
         return record
 
     def _modernize(self, legacy_signals: list[Signal]) -> list[Evidence]:
@@ -83,23 +88,16 @@ class DecisionPipeline:
         return evidence
 
     def _review(self, candidate: DecisionCandidate, request: DecisionRequest) -> Verdict:
-        if self.governance is not None:
-            return self.governance.review(candidate, request.policy_snapshot)
-        return Verdict(approved=True, reason="no governance configured")
+        return self.governance.review(candidate, request.policy_snapshot)
 
     def _execute(self, candidate: DecisionCandidate, verdict: Verdict) -> ExecutionResult:
         if not verdict.approved:
-            return ExecutionResult(
-                action_id="fallback",
-                status="blocked",
-                output={"reason": verdict.reason},
-                latency_ms=0.0,
-            )
-        action_id = candidate.actions[0].get("type", "action") if candidate.actions else "none"
+            return self.governance.fallback.handle(candidate, verdict.reason, verdict.outcome)
+        action_id = candidate.actions[0].type if candidate.actions else "none"
         return ExecutionResult(
             action_id=action_id,
             status="success",
-            output={"executed": True, "actions": candidate.actions},
+            output={"executed": True, "actions": [asdict(a) for a in candidate.actions]},
             latency_ms=1.0,
         )
 
@@ -126,10 +124,16 @@ class DecisionPipeline:
                 },
                 {
                     "step": "generate",
-                    "actions": candidate.actions,
+                    "actions": [asdict(a) for a in candidate.actions],
                     "evidence_refs": candidate.evidence_refs,
+                    "seed_honored": self.decision_engine.llm.supports_seed,
                 },
-                {"step": "verdict", "approved": verdict.approved, "reason": verdict.reason},
+                {
+                    "step": "verdict",
+                    "outcome": verdict.outcome,
+                    "approved": verdict.approved,
+                    "reason": verdict.reason,
+                },
                 {"step": "execute", "status": execution.status},
             ]
         )
