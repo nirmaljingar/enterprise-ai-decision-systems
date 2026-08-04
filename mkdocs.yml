@@ -28,7 +28,9 @@ nav:
   - Evaluation: evaluation.md
   - Tutorials: tutorials/README.md
   - Examples: examples/README.md
-  - Benchmarks: benchmarks/README.md
+  - Benchmarks:
+      - Published results: benchmarks/index.md
+      - About: benchmarks/about.md
   - Diagrams: diagrams/README.md
   - Technical Report: technical_report.md
   - Demo: wow_demo.md

@@ -10,7 +10,7 @@ implemented, while several paper-traced modules are documented stubs. See
 - [Research Design](research_design.md) — project plan and architecture.
 - [Evaluation](evaluation.md) — the metrics that exist and the ones that do not.
 - [Tutorials](tutorials/README.md), [Examples](examples/README.md),
-  [Benchmarks](benchmarks/README.md).
+  [Benchmarks](benchmarks/index.md).
 
 Run the quickstart:
 
