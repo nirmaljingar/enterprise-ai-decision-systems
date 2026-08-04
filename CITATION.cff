@@ -11,6 +11,13 @@ authors:
 repository-code: "https://github.com/nirmaljingar/enterprise-ai-decision-systems"
 url: "https://github.com/nirmaljingar/enterprise-ai-decision-systems"
 license: Apache-2.0
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21797859"
+    description: "Concept DOI: every version of this software. Cite this one unless you need a specific release."
+  - type: doi
+    value: "10.5281/zenodo.21797860"
+    description: "Version DOI: the v2.0.0 release exactly."
 references:
   - type: conference-paper
     title: "Modernizing Legacy Enterprise Platforms Using LLM-Driven Refactoring and AI-Assisted Architecture Transformation"

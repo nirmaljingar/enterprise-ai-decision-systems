@@ -31,6 +31,14 @@ An earlier revision of this repository listed four DOIs that resolved to unrelat
 authors. That is why the check exists, and why the test also asserts that no DOI appears in prose
 without appearing in `papers.json`: add or change an identifier there, never in prose alone.
 
-## Citing the repository
+## Citing the software
 
-If you use the code, benchmarks, or examples, cite the `CITATION.cff` entry for this repository.
+The v2.0.0 release is archived on Zenodo, so a specific state of this code is citable on its own:
+
+- **Concept DOI — [10.5281/zenodo.21797859](https://doi.org/10.5281/zenodo.21797859).** Resolves to
+  the latest version. Cite this when you mean "this software".
+- **Version DOI — [10.5281/zenodo.21797860](https://doi.org/10.5281/zenodo.21797860).** Resolves to
+  v2.0.0 exactly. Cite this when a result depends on the code that produced it -- a benchmark number
+  reported against a moving target cannot be reproduced.
+
+Both are declared in `CITATION.cff`, which GitHub's *Cite this repository* reads.

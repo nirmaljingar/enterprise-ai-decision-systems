@@ -12,6 +12,7 @@ import urllib.request
 from pathlib import Path
 
 import pytest
+import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 PAPERS = ROOT / "data" / "papers" / "papers.json"
@@ -56,16 +57,34 @@ def _markdown_documents() -> list[Path]:
     ]
 
 
+def _software_dois() -> set[str]:
+    """The archive identifiers for this software, declared in CITATION.cff.
+
+    A Zenodo DOI names the code, not a paper, so it has no place in ``papers.json`` -- but it still
+    needs a single declared source, or the rule below degrades into "except the ones we allow".
+    """
+    with (ROOT / "CITATION.cff").open() as handle:
+        citation = yaml.safe_load(handle)
+    return {
+        str(identifier["value"]).lower()
+        for identifier in citation.get("identifiers", [])
+        if identifier.get("type") == "doi"
+    }
+
+
 def test_papers_json_is_the_only_source_of_dois() -> None:
-    """Every DOI written in any prose file must exist in papers.json.
+    """Every DOI written in any prose file must exist in papers.json or CITATION.cff.
 
     Scoped to two files, this check passed while ``data/papers/README.md`` still listed the four
     superseded DOIs, so it scans every tracked Markdown document instead.
     """
-    declared = {str(paper["doi"]).lower() for paper in _papers()}
+    declared = {str(paper["doi"]).lower() for paper in _papers()} | _software_dois()
     pattern = re.compile(r"10\.\d{4,9}/[\w.()/-]*\w")
     for document in _markdown_documents():
-        for found in pattern.findall(document.read_text()):
+        for match in pattern.findall(document.read_text()):
+            # A DOI may legitimately contain dots, so the pattern also swallows a badge image's
+            # extension. Comparing the stripped form keeps the check on the identifier itself.
+            found = re.sub(r"\.(svg|png|json|xml)$", "", match, flags=re.IGNORECASE)
             assert found.lower() in declared, (
                 f"{document.relative_to(ROOT)} cites unknown DOI {found}"
             )
