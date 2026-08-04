@@ -105,6 +105,7 @@ class AuditRecord:
     verdict: Verdict | None = None
     execution: ExecutionResult | None = None
     timestamp: str = field(default_factory=system_clock)
+    policy_snapshot_id: str = ""
     signatures: dict[str, str] = field(default_factory=dict)
 
 

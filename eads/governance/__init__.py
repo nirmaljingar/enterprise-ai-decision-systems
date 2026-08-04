@@ -4,6 +4,7 @@ from .governance import GovernanceLayer
 from .permissions import PermissionGate
 from .policy import PolicyEngine
 from .safety import SafetyFilter
+from .snapshot import policy_snapshot_id
 from .trust import TrustScorer
 
 __all__ = [
@@ -14,4 +15,5 @@ __all__ = [
     "PolicyEngine",
     "SafetyFilter",
     "TrustScorer",
+    "policy_snapshot_id",
 ]

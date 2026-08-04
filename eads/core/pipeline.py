@@ -3,6 +3,7 @@ from typing import Any
 
 from ..decision.decision import DecisionEngine
 from ..governance.governance import GovernanceLayer
+from ..governance.snapshot import policy_snapshot_id
 from ..knowledge_ingestion.ingestion import IngestionPipeline
 from ..modernization.modernization import ModernizationPipeline
 from ..reasoning.reasoning import ReasoningEngine
@@ -42,7 +43,11 @@ class DecisionPipeline:
         self.clock = clock
 
     def run(self, request: DecisionRequest) -> AuditRecord:
-        record = AuditRecord(request_id=request.request_id, timestamp=self.clock())
+        record = AuditRecord(
+            request_id=request.request_id,
+            timestamp=self.clock(),
+            policy_snapshot_id=policy_snapshot_id(request.policy_snapshot),
+        )
         legacy_signals = [
             s for s in request.signals if s.metadata.get("source_type") == "legacy_code"
         ]
@@ -138,6 +143,7 @@ class DecisionPipeline:
                     "outcome": verdict.outcome,
                     "approved": verdict.approved,
                     "reason": verdict.reason,
+                    "policy_snapshot_id": policy_snapshot_id(request.policy_snapshot),
                 },
                 {"step": "execute", "status": execution.status},
             ]
