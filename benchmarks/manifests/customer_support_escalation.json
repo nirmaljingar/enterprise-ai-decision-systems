@@ -1,0 +1,45 @@
+{
+  "id": "customer_support_escalation",
+  "domain": "customer_support",
+  "label": "Illustrative example",
+  "traces_to": "Paper 2 (LASCI): evidence-grounded response to unstructured input",
+  "seed": 5,
+  "repeats": 3,
+  "backend": "fake",
+  "scenarios": [
+    {
+      "id": "cs-refund-within-policy",
+      "goal": "decide the refund for order #12345",
+      "policy_snapshot": {
+        "max_order_quantity": 1000,
+        "unit_price": 1.0,
+        "region": "US"
+      },
+      "expected_outcome": "approved",
+      "signal_count": 3,
+      "actor": {
+        "id": "planner-7",
+        "roles": [
+          "planner"
+        ]
+      }
+    },
+    {
+      "id": "cs-refund-needs-approval",
+      "goal": "order 500 goodwill credits for the VIP account",
+      "policy_snapshot": {
+        "max_order_quantity": 1000,
+        "unit_price": 20.0,
+        "region": "US"
+      },
+      "expected_outcome": "escalated",
+      "signal_count": 3,
+      "actor": {
+        "id": "planner-7",
+        "roles": [
+          "planner"
+        ]
+      }
+    }
+  ]
+}
