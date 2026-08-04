@@ -13,9 +13,9 @@ from pathlib import Path
 
 import pytest
 
-PAPERS = Path(__file__).resolve().parent.parent / "data" / "papers" / "papers.json"
-CITING = Path(__file__).resolve().parent.parent / "CITING.md"
-README = Path(__file__).resolve().parent.parent / "README.md"
+ROOT = Path(__file__).resolve().parent.parent
+PAPERS = ROOT / "data" / "papers" / "papers.json"
+SKIPPED_DIRECTORIES = {".git", ".venv", "site", "__pycache__"}
 CROSSREF = "https://api.crossref.org/works/{doi}"
 NETWORK_TESTS_ENABLED = os.getenv("EADS_NETWORK_TESTS") == "1"
 
@@ -48,13 +48,27 @@ def test_every_paper_declares_a_doi() -> None:
         assert paper["status"] == "published"
 
 
+def _markdown_documents() -> list[Path]:
+    return [
+        path
+        for path in ROOT.rglob("*.md")
+        if not SKIPPED_DIRECTORIES & set(path.relative_to(ROOT).parts)
+    ]
+
+
 def test_papers_json_is_the_only_source_of_dois() -> None:
-    """Every DOI written in prose must exist in papers.json."""
+    """Every DOI written in any prose file must exist in papers.json.
+
+    Scoped to two files, this check passed while ``data/papers/README.md`` still listed the four
+    superseded DOIs, so it scans every tracked Markdown document instead.
+    """
     declared = {str(paper["doi"]).lower() for paper in _papers()}
     pattern = re.compile(r"10\.\d{4,9}/[\w.()/-]*\w")
-    for document in (CITING, README):
+    for document in _markdown_documents():
         for found in pattern.findall(document.read_text()):
-            assert found.lower() in declared, f"{document.name} cites unknown DOI {found}"
+            assert found.lower() in declared, (
+                f"{document.relative_to(ROOT)} cites unknown DOI {found}"
+            )
 
 
 @pytest.mark.skipif(

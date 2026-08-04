@@ -11,7 +11,11 @@ This document is the Phase 1 research foundation and Phase 2 repository design f
 
 Each DOI is verified against Crossref by `tests/test_citations.py`; see [`CITING.md`](https://github.com/nirmaljingar/enterprise-ai-decision-systems/blob/main/CITING.md) for the full IEEE citations.
 
-> **Note on status.** This design is now grounded in the full-text PDF extraction. Exact algorithms, evaluation protocols, and numerical claims are present in `data/papers/extracted/`. Implementation details not directly traceable to a published paper are labeled as *Reference implementation*, *Educational example*, or *Suggested extension*.
+> **Note on status.** This design is derived from the four papers' public abstracts and the project
+> brief, **not** from their full text. `eads.paper_extraction` can parse locally licensed PDFs, but no
+> extracted corpus ships here and no statement in this repository is traceable to full paper text.
+> Implementation details not directly traceable to a published paper are labeled as *Reference
+> implementation*, *Educational example*, or *Suggested extension*.
 
 ## 2. Unifying research question
 
@@ -38,6 +42,6 @@ The repository is the official, open, original research companion for EADS. It i
 | Phase | Deliverable | Status |
 |-------|-------------|--------|
 | Phase 1 | Research Design Document | Complete |
-| Phase 1.5 | Full paper text extraction | Complete — source PDFs processed locally; public index in `data/papers/papers.json` |
+| Phase 1.5 | Full paper text extraction | **Not done** — tooling only (`eads.paper_extraction`); the public index in `data/papers/papers.json` is bibliographic, not extracted |
 | Phase 2 | Complete repository design | Complete |
-| Phase 3 | Incremental per-module implementation | In progress (tested, reference implementations in place) |
+| Phase 3 | Incremental per-module implementation | In progress — five modules are still stubs; see [`limitations.md`](limitations.md) |
