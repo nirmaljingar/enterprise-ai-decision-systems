@@ -1,3 +1,4 @@
+from eads import __version__
 from eads.core.pipeline import DecisionPipeline
 from eads.core.types import DecisionRequest
 from eads.decision.decision import DecisionEngine
@@ -36,7 +37,7 @@ def main():
         pipeline,
         scenarios,
         output_dir="benchmarks/results/it_operations",
-        metadata={"example": "it_operations", "version": "1.0.0"},
+        metadata={"example": "it_operations", "version": __version__},
     )
     report = benchmark.run()
     print("Benchmark report:", report)
