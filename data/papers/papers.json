@@ -3,56 +3,84 @@
     "id": "paper1_lraatf",
     "acronym": "LRAATF",
     "title": "Modernizing Legacy Enterprise Platforms Using LLM-Driven Refactoring and AI-Assisted Architecture Transformation",
-    "authors": ["Nirmal Kumar Jingar"],
-    "author_note": "Author list is provisional until the publication record is confirmed.",
-    "doi": null,
-    "url": null,
-    "venue": "IEEE Transactions on Technology and Society",
-    "year": 2024,
-    "status": "unpublished",
+    "authors": [
+      "Nirmal Kumar Jingar"
+    ],
+    "doi": "10.1109/rmkmate69073.2026.11518954",
+    "url": "https://doi.org/10.1109/rmkmate69073.2026.11518954",
+    "venue": "2026 3rd International Conference on Research Methodologies in Knowledge Management, Artificial Intelligence and Telecommunication Engineering (RMKMATE)",
+    "publisher": "IEEE",
+    "pages": "1-6",
+    "ieee_document": "11518954",
+    "year": 2026,
+    "status": "published",
     "open_access": false,
-    "modules": ["eads.modernization", "eads.governance"]
+    "modules": [
+      "eads.modernization",
+      "eads.governance"
+    ]
   },
   {
     "id": "paper2_lasci",
     "acronym": "LASCI",
     "title": "Leveraging Large Language Models and Autonomous Agents for Unstructured Supply Chain Intelligence",
-    "authors": ["Nirmal Kumar Jingar"],
-    "author_note": "Author list is provisional until the publication record is confirmed.",
-    "doi": null,
-    "url": null,
-    "venue": "IEEE Access",
-    "year": 2025,
-    "status": "unpublished",
-    "open_access": true,
-    "modules": ["eads.knowledge_ingestion", "eads.agents"]
+    "authors": [
+      "Nirmal Kumar Jingar"
+    ],
+    "doi": "10.1109/icetsis68266.2026.11548779",
+    "url": "https://doi.org/10.1109/icetsis68266.2026.11548779",
+    "venue": "2026 ASU International Conference in Emerging Technologies for Sustainability and Intelligent Systems (ICETSIS)",
+    "publisher": "IEEE",
+    "pages": "1467-1472",
+    "ieee_document": "11548779",
+    "year": 2026,
+    "status": "published",
+    "open_access": false,
+    "modules": [
+      "eads.knowledge_ingestion",
+      "eads.agents"
+    ]
   },
   {
     "id": "paper3_llm_de",
     "acronym": "LLM-DE",
     "title": "Reliable LLM-Powered Decision Engines for Large-Scale Supply Chain Operations: Architecture, Safety, and Performance Guarantees",
-    "authors": ["Nirmal Kumar Jingar"],
-    "author_note": "Author list is provisional until the publication record is confirmed.",
-    "doi": null,
-    "url": null,
-    "venue": "IEEE Transactions on Engineering Management",
-    "year": 2025,
-    "status": "unpublished",
+    "authors": [
+      "Nirmal Kumar Jingar"
+    ],
+    "doi": "10.1109/IC_ASET69920.2026.11502212",
+    "url": "https://doi.org/10.1109/IC_ASET69920.2026.11502212",
+    "venue": "2026 IEEE International Conference on Advanced Systems and Emergent Technologies (IC_ASET)",
+    "publisher": "IEEE",
+    "pages": "1-6",
+    "ieee_document": "11502212",
+    "year": 2026,
+    "status": "published",
     "open_access": false,
-    "modules": ["eads.decision", "eads.governance"]
+    "modules": [
+      "eads.decision",
+      "eads.governance"
+    ]
   },
   {
     "id": "paper4_agaf",
     "acronym": "AGAF",
     "title": "Operationalizing Generative and Agentic AI Across Complex Logistics Networks: Architecture, Governance, and Trust Models",
-    "authors": ["Nirmal Kumar Jingar"],
-    "author_note": "Author list is provisional until the publication record is confirmed.",
-    "doi": null,
-    "url": null,
-    "venue": "IEEE Access",
-    "year": 2025,
-    "status": "unpublished",
-    "open_access": true,
-    "modules": ["eads.governance", "eads.agents"]
+    "authors": [
+      "Nirmal Kumar Jingar"
+    ],
+    "doi": "10.1109/icetsis68266.2026.11549394",
+    "url": "https://doi.org/10.1109/icetsis68266.2026.11549394",
+    "venue": "2026 ASU International Conference in Emerging Technologies for Sustainability and Intelligent Systems (ICETSIS)",
+    "publisher": "IEEE",
+    "pages": "1460-1466",
+    "ieee_document": "11549394",
+    "year": 2026,
+    "status": "published",
+    "open_access": false,
+    "modules": [
+      "eads.governance",
+      "eads.agents"
+    ]
   }
 ]

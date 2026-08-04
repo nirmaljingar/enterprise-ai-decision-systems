@@ -11,6 +11,55 @@ authors:
 repository-code: "https://github.com/nirmaljingar/enterprise-ai-decision-systems"
 url: "https://github.com/nirmaljingar/enterprise-ai-decision-systems"
 license: Apache-2.0
+references:
+  - type: conference-paper
+    title: "Modernizing Legacy Enterprise Platforms Using LLM-Driven Refactoring and AI-Assisted Architecture Transformation"
+    authors:
+      - family-names: "Jingar"
+        given-names: "Nirmal Kumar"
+    collection-title: "2026 3rd International Conference on Research Methodologies in Knowledge Management, Artificial Intelligence and Telecommunication Engineering (RMKMATE)"
+    publisher:
+      name: "IEEE"
+    year: 2026
+    start: 1
+    end: 6
+    doi: "10.1109/rmkmate69073.2026.11518954"
+  - type: conference-paper
+    title: "Leveraging Large Language Models and Autonomous Agents for Unstructured Supply Chain Intelligence"
+    authors:
+      - family-names: "Jingar"
+        given-names: "Nirmal Kumar"
+    collection-title: "2026 ASU International Conference in Emerging Technologies for Sustainability and Intelligent Systems (ICETSIS)"
+    publisher:
+      name: "IEEE"
+    year: 2026
+    start: 1467
+    end: 1472
+    doi: "10.1109/icetsis68266.2026.11548779"
+  - type: conference-paper
+    title: "Reliable LLM-Powered Decision Engines for Large-Scale Supply Chain Operations: Architecture, Safety, and Performance Guarantees"
+    authors:
+      - family-names: "Jingar"
+        given-names: "Nirmal Kumar"
+    collection-title: "2026 IEEE International Conference on Advanced Systems and Emergent Technologies (IC_ASET)"
+    publisher:
+      name: "IEEE"
+    year: 2026
+    start: 1
+    end: 6
+    doi: "10.1109/IC_ASET69920.2026.11502212"
+  - type: conference-paper
+    title: "Operationalizing Generative and Agentic AI Across Complex Logistics Networks: Architecture, Governance, and Trust Models"
+    authors:
+      - family-names: "Jingar"
+        given-names: "Nirmal Kumar"
+    collection-title: "2026 ASU International Conference in Emerging Technologies for Sustainability and Intelligent Systems (ICETSIS)"
+    publisher:
+      name: "IEEE"
+    year: 2026
+    start: 1460
+    end: 1466
+    doi: "10.1109/icetsis68266.2026.11549394"
 keywords:
   - enterprise artificial intelligence
   - large language models
