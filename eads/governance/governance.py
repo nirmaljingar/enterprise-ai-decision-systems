@@ -6,6 +6,7 @@ from ..core.types import (
     REJECTED,
     Actor,
     DecisionCandidate,
+    Evidence,
     Verdict,
 )
 from .audit import AuditLogger
@@ -40,13 +41,16 @@ class GovernanceLayer:
         candidate: DecisionCandidate,
         context: dict[str, Any] | None = None,
         actor: Actor | None = None,
+        evidence: list[Evidence] | None = None,
     ) -> Verdict:
         context = context or {}
         policy_violations = self.policy.evaluate(candidate, context)
         safety_violations = self.safety.check(candidate, context)
         all_violations = policy_violations + safety_violations
         approvals = self.permissions.approvals(candidate, context, actor)
-        trust = self.trust.score(candidate, context)
+        # Trust is graded against the evidence record, not the candidate's self-report. It is a
+        # signal for triage and audit and gates nothing: the checks below decide the outcome.
+        trust = self.trust.assess(candidate, context, evidence)
         if all_violations:
             # A violation is terminal: no approval can authorize an unsafe action.
             outcome = REJECTED
@@ -64,6 +68,7 @@ class GovernanceLayer:
             reason=reason,
             violated_policies=all_violations,
             required_approvals=approvals,
-            trust_score=trust,
+            trust_score=trust.score,
             outcome=outcome,
+            trust_reasons=list(trust.reasons),
         )

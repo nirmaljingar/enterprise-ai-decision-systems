@@ -14,13 +14,41 @@ class Signal:
 
 
 @dataclass(frozen=True)
+class SourceSpan:
+    """The characters of a signal an evidence claim was extracted from.
+
+    Evidence without a span is unverifiable: a reviewer cannot quote it, and a changed source cannot
+    be detected. The span indexes ``Signal.content`` unmodified.
+    """
+
+    signal_id: str
+    start: int
+    end: int
+    text: str = ""
+
+
+@dataclass(frozen=True)
 class Evidence:
+    """One extracted claim, with everything needed to check it.
+
+    ``confidence`` is derived from how much checkable detail the extractor found, never asserted by
+    the extractor or by a model. ``imperative`` marks claims phrased as instructions, which is the
+    shape prompt injection takes when it arrives inside ingested content; ``trusted`` records
+    whether the source was on the caller's trusted list. Neither is used to authorize anything --
+    they exist so the trust boundary is visible on the record rather than inferred from prose.
+    """
+
     id: str
     signal_ids: list[str]
     claim: str
     confidence: float
     source_refs: list[str]
     extracted_by: str
+    provenance: tuple[SourceSpan, ...] = ()
+    entities: tuple[str, ...] = ()
+    quantities: tuple[float, ...] = ()
+    imperative: bool = False
+    trusted: bool = True
 
 
 @dataclass(frozen=True)
@@ -113,6 +141,8 @@ class Verdict:
     required_approvals: list[ApprovalRequirement] = field(default_factory=list)
     trust_score: float = 0.0
     outcome: str = APPROVED
+    trust_reasons: list[str] = field(default_factory=list)
+    """Named deductions behind ``trust_score``, so a low score can be explained."""
 
 
 @dataclass

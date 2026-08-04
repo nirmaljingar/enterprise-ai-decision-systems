@@ -6,6 +6,8 @@ approving injected orders fails here rather than being published as a result.
 """
 
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -105,6 +107,22 @@ def test_a_manifest_with_no_scenarios_is_rejected(tmp_path: Path) -> None:
     )
     with pytest.raises(ManifestError, match="no scenarios"):
         Manifest.load(path)
+
+
+def test_the_published_results_page_is_not_stale() -> None:
+    """The page readers see must match what the manifests currently produce.
+
+    A published number that drifts from the code is worse than no number, so regenerating the page
+    is part of changing a metric rather than a step someone remembers.
+    """
+    completed = subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "run_benchmarks.py"), "--check"],
+        capture_output=True,
+        check=False,
+        text=True,
+        cwd=ROOT,
+    )
+    assert completed.returncode == 0, completed.stdout + completed.stderr
 
 
 @pytest.mark.parametrize("path", MANIFESTS, ids=lambda path: path.stem)
