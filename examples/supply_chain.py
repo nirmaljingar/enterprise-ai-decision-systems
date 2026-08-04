@@ -1,3 +1,4 @@
+from eads import __version__
 from eads.core.pipeline import DecisionPipeline
 from eads.core.types import DecisionRequest
 from eads.decision.decision import DecisionEngine
@@ -38,7 +39,7 @@ def main():
         pipeline,
         scenarios,
         output_dir="benchmarks/results/supply_chain",
-        metadata={"example": "supply_chain", "version": "1.0.0"},
+        metadata={"example": "supply_chain", "version": __version__},
     )
     report = benchmark.run()
     for metric in (

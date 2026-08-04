@@ -5,6 +5,7 @@ can lint cleanly and still raise on the first line, and examples are the first t
 Each script must exit zero using only synthetic data and no API keys.
 """
 
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -17,6 +18,19 @@ EXAMPLES = sorted(path.name for path in (ROOT / "examples").glob("*.py"))
 
 def test_examples_directory_is_not_empty() -> None:
     assert EXAMPLES, "no example scripts found; the example gate would pass vacuously"
+
+
+@pytest.mark.parametrize("script", EXAMPLES)
+def test_example_does_not_hardcode_a_version(script: str) -> None:
+    """Results carry the version that produced them, or the provenance is a guess.
+
+    Every domain example stamped ``"version": "1.0.0"`` into ``results.json`` long after the package
+    reached 2.0.0, so a published result named code that did not produce it.
+    """
+    source = (ROOT / "examples" / script).read_text()
+    assert not re.search(r'"version":\s*"', source), (
+        f"examples/{script} hard-codes a version; stamp eads.__version__ instead"
+    )
 
 
 @pytest.mark.parametrize("script", EXAMPLES)
