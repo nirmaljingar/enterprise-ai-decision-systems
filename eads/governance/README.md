@@ -25,5 +25,7 @@ not fitted. And it authorizes nothing: `PolicyEngine`, `SafetyFilter`, and `Perm
 the outcome and fail closed regardless of the score. Trust that gates execution would be a second,
 weaker policy engine.
 
-Status: rich policy DSL, role-based access control, and immutable audit signing are planned
-extensions.
+Not here: a policy DSL, role hierarchies, and a signed audit log. `AuditLogger` is in-memory and
+append-only by construction, which is not the same as tamper-evident -- signing needs key management
+and a canonical serialization, and a signature field without them would imply a property nothing
+backs.

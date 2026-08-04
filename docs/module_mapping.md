@@ -23,6 +23,6 @@ Every `eads.*` module either traces to one or more IEEE EADS papers or is explic
 |-------------|--------|-------------|
 | `eads.paper_extraction.extract_papers_from_directory` | Implemented | PyMuPDF-backed extraction pipeline |
 | `eads.core.pipeline.DecisionPipeline` | Implemented | Deterministic orchestration over the full lifecycle |
-| `eads.governance.GovernanceLayer` | Implemented (stub) | Policy, safety, permissions, fallback, audit, and trust checks |
-| `eads.decision.DecisionEngine` | Implemented (stub) | LLM reasoning with optional solver/forecaster adapters |
+| `eads.governance.GovernanceLayer` | Implemented | Policy, safety, permissions, fallback, audit, and trust checks over typed fields, failing closed |
+| `eads.decision.DecisionEngine` | Implemented | Parses model output once into typed actions; optional solver and forecaster adapters. The default backend is `FakeLLM`, not a model |
 | `eads.evaluation.Benchmark` | Implemented | Reproducible benchmark harness with JSON output |

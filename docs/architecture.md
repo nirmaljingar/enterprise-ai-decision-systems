@@ -27,7 +27,9 @@ graph LR
 4. **Generate** — the decision engine produces candidate decisions.
 5. **Govern / Validate** — policy, safety, and permission checks run together.
 6. **Escalate or Execute** — fallback routes unsafe or unauthorized decisions to humans; otherwise tool invocation proceeds.
-7. **Audit** — immutable log of inputs, evidence, decisions, rationale, and trust scores.
+7. **Audit** — append-only record of inputs, evidence, decisions, rationale, trust scores, the
+   policy snapshot they were judged under, and the actor they were requested for. In-memory and
+   unsigned; see [Security](security.md).
 
 ## Layer-to-paper mapping
 
