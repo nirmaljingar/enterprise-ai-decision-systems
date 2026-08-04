@@ -1,4 +1,11 @@
-from ..core.types import ESCALATED, REJECTED, DecisionCandidate, ExecutionResult
+from ..core.types import (
+    ESCALATED,
+    REJECTED,
+    Actor,
+    ApprovalRequirement,
+    DecisionCandidate,
+    ExecutionResult,
+)
 
 _STATUS = {REJECTED: "blocked", ESCALATED: "escalated"}
 _SAFE_ACTION = {
@@ -15,6 +22,8 @@ class FallbackHandler:
         candidate: DecisionCandidate,
         reason: str,
         outcome: str = REJECTED,
+        actor: Actor | None = None,
+        required_approvals: list[ApprovalRequirement] | None = None,
     ) -> ExecutionResult:
         return ExecutionResult(
             action_id="fallback",
@@ -24,6 +33,10 @@ class FallbackHandler:
                 "outcome": outcome,
                 "safe_action": _SAFE_ACTION.get(outcome, "discard_and_notify"),
                 "candidate": candidate.plan_id,
+                "requested_by": actor.id if actor else "unattributed",
+                "awaiting_roles": [
+                    approval.approver_role for approval in (required_approvals or [])
+                ],
             },
             latency_ms=0.0,
         )
