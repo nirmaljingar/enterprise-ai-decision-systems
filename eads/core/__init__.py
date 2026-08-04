@@ -8,6 +8,7 @@ from .types import (
     Evidence,
     ExecutionResult,
     Plan,
+    ProposedAction,
     Signal,
     Verdict,
 )
@@ -26,6 +27,7 @@ __all__ = [
     "OllamaLLM",
     "OpenAILLM",
     "Plan",
+    "ProposedAction",
     "Signal",
     "Verdict",
 ]
