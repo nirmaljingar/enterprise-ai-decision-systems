@@ -4,6 +4,13 @@ from typing import Any
 
 
 class LLMBackend(ABC):
+    supports_seed: bool = True
+    """Whether ``generate`` can honor ``seed``.
+
+    Backends that cannot are still usable, but runs against them are not reproducible; the
+    pipeline records this on the trace instead of implying determinism it cannot provide.
+    """
+
     @abstractmethod
     def generate(self, prompt: str, seed: int | None = None) -> str:
         ...
@@ -67,6 +74,8 @@ class OpenAILLM(LLMBackend):
 
 class AnthropicLLM(LLMBackend):
     """Anthropic Messages API adapter (requires the 'anthropic' extra)."""
+
+    supports_seed = False
 
     def __init__(
         self,
