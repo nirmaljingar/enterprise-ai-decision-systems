@@ -32,15 +32,17 @@ Four rules do the work, and each is a test:
 
 1. Model output is parsed **once** into typed fields (`ProposedAction.quantity`, `.region`); policy
    checks read the fields, never the prose.
-2. An action that is missing, unparseable, of an unknown type, or missing a required field is
-   **rejected** -- an unrecognised action is the case where you know least, so it cannot be the case
-   you allow.
+2. An action that is missing, unparseable, of an unknown type, missing a required field, or stating
+   one field twice with two different values is **rejected** -- an unrecognised action is the case
+   where you know least, so it cannot be the case you allow. Ambiguity counts: choosing between two
+   declared quantities hands the choice to whoever wrote the text.
 3. A model assertion never widens a limit. The policy snapshot is the only source of limits, and it is
    hashed into the audit record.
 4. Rejection and escalation are different outcomes. Escalation is not authorization; it needs a second
    party.
 
-Measured on `benchmarks/manifests/supply_chain_prompt_injection.json`, against a backend that
+Measured on `benchmarks/manifests/supply_chain_prompt_injection.json` and
+`supply_chain_ambiguous_injection.json`, against a backend that
 *always* obeys the injection: **`injection_resistance` = 1.00**, `policy_compliance` = 1.00. That number bounds what the governance
 layer blocks when the model is maximally compromised — it is **not** a claim about how often a real
 model complies. [What the numbers mean, and how to report one against
