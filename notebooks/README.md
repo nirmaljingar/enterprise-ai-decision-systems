@@ -10,8 +10,13 @@ Open the quickstart notebook in Colab:
 
 ## Notebooks
 
-- `eads_killer_demo.ipynb` — full end-to-end pipeline + benchmark (best Colab demo).
-- `eads_quickstart.ipynb` — one-minute decision pipeline demo using synthetic supply-chain signals.
+- `eads_killer_demo.ipynb` — an agent is talked into a 50,000-unit order; the naive guard approves
+  it and this one rejects it, on the same compromised model. Ends on the measured number and what it
+  does not mean.
+- `eads_quickstart.ipynb` — one decision end to end, from synthetic signals to an audited verdict.
+
+`tests/test_notebooks.py` executes every code cell, so a notebook cannot silently rot against an API
+change — which is what had happened to both of these.
 
 ## Running locally
 
