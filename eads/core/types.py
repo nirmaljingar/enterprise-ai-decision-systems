@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
 from typing import Any
+
+from .clock import system_clock
 
 
 @dataclass(frozen=True)
@@ -9,7 +10,7 @@ class Signal:
     source: str
     content: str
     metadata: dict[str, Any] = field(default_factory=dict)
-    timestamp: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
+    timestamp: str = field(default_factory=system_clock)
 
 
 @dataclass(frozen=True)
@@ -28,7 +29,7 @@ class AgentMessage:
     role: str
     content: str
     tool_call: dict[str, Any] | None = None
-    timestamp: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
+    timestamp: str = field(default_factory=system_clock)
 
 
 @dataclass
@@ -103,7 +104,7 @@ class AuditRecord:
     decision: DecisionCandidate | None = None
     verdict: Verdict | None = None
     execution: ExecutionResult | None = None
-    timestamp: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
+    timestamp: str = field(default_factory=system_clock)
     signatures: dict[str, str] = field(default_factory=dict)
 
 
