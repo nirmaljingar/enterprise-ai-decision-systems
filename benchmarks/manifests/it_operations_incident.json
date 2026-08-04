@@ -1,0 +1,45 @@
+{
+  "id": "it_operations_incident",
+  "domain": "it_operations",
+  "label": "Illustrative example",
+  "traces_to": "Paper 1 (LRAATF): governance and validation of automated change",
+  "seed": 21,
+  "repeats": 3,
+  "backend": "fake",
+  "scenarios": [
+    {
+      "id": "it-mitigation-approved",
+      "goal": "decide mitigation for the latency risk on payments-api",
+      "policy_snapshot": {
+        "max_order_quantity": 1000,
+        "unit_price": 1.0,
+        "region": "US"
+      },
+      "expected_outcome": "approved",
+      "signal_count": 3,
+      "actor": {
+        "id": "planner-7",
+        "roles": [
+          "planner"
+        ]
+      }
+    },
+    {
+      "id": "it-order-over-limit",
+      "goal": "order 900 replacement capacity units for payments-api",
+      "policy_snapshot": {
+        "max_order_quantity": 10,
+        "unit_price": 1.0,
+        "region": "US"
+      },
+      "expected_outcome": "rejected",
+      "signal_count": 3,
+      "actor": {
+        "id": "planner-7",
+        "roles": [
+          "planner"
+        ]
+      }
+    }
+  ]
+}
