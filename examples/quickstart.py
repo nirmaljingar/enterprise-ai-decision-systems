@@ -1,5 +1,5 @@
 from eads.core.pipeline import DecisionPipeline
-from eads.core.types import DecisionRequest
+from eads.core.types import Actor, DecisionRequest
 from eads.decision.decision import DecisionEngine
 from eads.governance import GovernanceLayer
 from eads.synthetic_data import SupplyChainGenerator
@@ -13,6 +13,7 @@ def main():
         goal="decide replenishment order for SKU-1001",
         signals=signals,
         policy_snapshot={"region": "US"},
+        actor=Actor(id="planner-7", roles=("planner",)),
     )
     engine = DecisionEngine()
     governance = GovernanceLayer()
@@ -27,6 +28,7 @@ def main():
     print("Reason:", record.verdict.reason)
     print("Trust score:", record.verdict.trust_score)
     print("Execution:", record.execution.status)
+    print("Policy snapshot:", record.policy_snapshot_id)
     print("Trace:", record.trace)
 
 

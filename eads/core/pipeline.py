@@ -10,6 +10,7 @@ from ..reasoning.reasoning import ReasoningEngine
 from .adapters import FakeLLM, LLMBackend
 from .clock import Clock, system_clock
 from .types import (
+    Actor,
     AuditRecord,
     DecisionCandidate,
     DecisionRequest,
@@ -47,6 +48,7 @@ class DecisionPipeline:
             request_id=request.request_id,
             timestamp=self.clock(),
             policy_snapshot_id=policy_snapshot_id(request.policy_snapshot),
+            actor=request.actor,
         )
         legacy_signals = [
             s for s in request.signals if s.metadata.get("source_type") == "legacy_code"
@@ -58,7 +60,7 @@ class DecisionPipeline:
         plan = self.reasoning.plan(evidence, request.goal)
         candidate = self.decision_engine.generate(request, plan=plan)
         verdict = self._review(candidate, request)
-        execution = self._execute(candidate, verdict)
+        execution = self._execute(candidate, verdict, request.actor)
         record.decision = candidate
         record.verdict = verdict
         record.execution = execution
@@ -93,11 +95,19 @@ class DecisionPipeline:
         return evidence
 
     def _review(self, candidate: DecisionCandidate, request: DecisionRequest) -> Verdict:
-        return self.governance.review(candidate, request.policy_snapshot)
+        return self.governance.review(candidate, request.policy_snapshot, request.actor)
 
-    def _execute(self, candidate: DecisionCandidate, verdict: Verdict) -> ExecutionResult:
+    def _execute(
+        self, candidate: DecisionCandidate, verdict: Verdict, actor: Actor
+    ) -> ExecutionResult:
         if not verdict.approved:
-            return self.governance.fallback.handle(candidate, verdict.reason, verdict.outcome)
+            return self.governance.fallback.handle(
+                candidate,
+                verdict.reason,
+                verdict.outcome,
+                actor,
+                verdict.required_approvals,
+            )
         action_id = candidate.actions[0].type if candidate.actions else "none"
         return ExecutionResult(
             action_id=action_id,
@@ -144,6 +154,10 @@ class DecisionPipeline:
                     "approved": verdict.approved,
                     "reason": verdict.reason,
                     "policy_snapshot_id": policy_snapshot_id(request.policy_snapshot),
+                    "actor": request.actor.id,
+                    "awaiting_roles": [
+                        approval.approver_role for approval in verdict.required_approvals
+                    ],
                 },
                 {"step": "execute", "status": execution.status},
             ]

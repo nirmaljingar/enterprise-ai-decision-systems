@@ -14,7 +14,7 @@ python examples/wow_demo.py
 1. **Ingested** 3 synthetic supply-chain signals.
 2. **Reasoned** over them to build a replenishment plan.
 3. **Generated** a decision (`order_quantity=181`).
-4. **Governed** it — blocked because *manager approval* is required.
+4. **Governed** it — escalated to a `manager`, because the order value exceeds the approval threshold. The decision is withheld, not executed.
 5. **Audited** the full trace end-to-end.
 
 ## Quickstart output
@@ -22,10 +22,11 @@ python examples/wow_demo.py
 ```text
 Request: demo-1
 Approved: False
-Reason: manager_approval_required
+Reason: manager: value 1810.00 exceeds the 500.00 approval threshold; requested by planner-7
 Trust score: 0.9
-Execution: blocked
-Trace: [{'step': 'ingest', 'signals': 3, 'evidence': 3}, {'step': 'reason', 'plan_id': 'plan_1', 'evidence_refs': ['ev_0', 'ev_1', 'ev_2']}, {'step': 'generate', 'actions': [{'type': 'decision', 'value': 'order_quantity=181'}], 'evidence_refs': ['ev_0', 'ev_1', 'ev_2']}, {'step': 'verdict', 'approved': False, 'reason': 'manager_approval_required'}, {'step': 'execute', 'status': 'blocked'}]
+Execution: escalated
+Policy snapshot: pol_ffdf694df3a25ed2
+Trace: [{'step': 'ingest', 'signals': 3, 'evidence': 3, 'evidence_ids': ['ev_synthetic_supply_chain_0', 'ev_synthetic_supply_chain_1', 'ev_synthetic_supply_chain_2']}, {'step': 'reason', 'plan_id': 'plan_1', 'evidence_refs': ['ev_synthetic_supply_chain_0', 'ev_synthetic_supply_chain_1', 'ev_synthetic_supply_chain_2']}, {'step': 'generate', 'actions': [{'type': 'order', 'raw_value': 'order_quantity=181', 'quantity': 181, 'region': 'US', 'label': None, 'parsed': True}], 'evidence_refs': ['ev_synthetic_supply_chain_0', 'ev_synthetic_supply_chain_1', 'ev_synthetic_supply_chain_2'], 'seed_honored': True}, {'step': 'verdict', 'outcome': 'escalated', 'approved': False, 'reason': 'manager: value 1810.00 exceeds the 500.00 approval threshold; requested by planner-7', 'policy_snapshot_id': 'pol_ffdf694df3a25ed2', 'actor': 'planner-7', 'awaiting_roles': ['manager']}, {'step': 'execute', 'status': 'escalated'}]
 ```
 
 ## Benchmark output

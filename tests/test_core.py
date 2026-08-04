@@ -101,7 +101,8 @@ def test_high_value_order_is_escalated_not_rejected():
     assert verdict.outcome == "escalated"
     assert not verdict.approved
     assert verdict.violated_policies == []
-    assert "manager_approval_required" in verdict.required_approvals
+    assert [a.approver_role for a in verdict.required_approvals] == ["manager"]
+    assert verdict.required_approvals[0].value == 6000.0
 
 
 def test_violation_outranks_pending_approval():
