@@ -21,13 +21,18 @@ markdown_extensions:
       permalink: true
 nav:
   - Home: index.md
+  - Getting Started: getting_started.md
   - Research Design: research_design.md
   - Architecture: architecture.md
   - Module Mapping: module_mapping.md
   - Evaluation: evaluation.md
-  - Tutorials: tutorials/
-  - Examples: examples/
-  - Benchmarks: benchmarks/index.md
+  - Tutorials: tutorials/README.md
+  - Examples: examples/README.md
+  - Benchmarks: benchmarks/README.md
+  - Diagrams: diagrams/README.md
+  - Technical Report: technical_report.md
+  - Demo: wow_demo.md
+  - Promotion: promotion.md
   - FAQ: FAQ.md
   - Limitations: limitations.md
   - Security: security.md

@@ -20,6 +20,11 @@ Never add real enterprise data, credentials, schemas, prompts, or benchmark arti
 
 ## Auditing and reproducibility
 
-- Every decision cycle produces an `AuditRecord`.
-- Re-running with the same input, seed, and policy snapshot must produce the same observable trace.
-- Any remaining non-determinism is captured as a `DecisionConsistency` metric.
+- Every decision cycle produces an `AuditRecord`, appended to the governance `AuditLogger`. The log
+  is in-memory and append-only by construction; it is not signed or tamper-proof.
+- Re-running with the same input, seed, policy snapshot, and a fixed clock
+  (`eads.core.clock.FixedClock`) produces an identical record. Backends that cannot honor a seed
+  report `supports_seed = False`, and the pipeline records that on the trace.
+- Any remaining non-determinism is measured by `decision_consistency` over repeated runs.
+- Governance fails closed: model output that cannot be parsed into a checkable action is rejected,
+  never approved by default.

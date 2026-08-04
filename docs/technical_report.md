@@ -15,7 +15,8 @@ The companion uses a shared data model (`eads.core.types`) and a deterministic `
 3. **Reasoning and agent collaboration** — `eads.reasoning` and `eads.agents`.
 4. **Decision generation** — `eads.decision` combining LLM reasoning with solver/forecaster adapters.
 5. **Governance** — policy, safety, permissions, fallback, audit, and trust scoring in `eads.governance`.
-6. **Execution and audit** — deterministic tool invocation and an immutable `AuditRecord`.
+6. **Execution and audit** — tool invocation, or delegation to the fallback handler when the verdict
+   is `rejected` or `escalated`, and an append-only `AuditRecord`.
 
 ## 3. Paper-to-module mapping
 
@@ -28,7 +29,14 @@ The companion uses a shared data model (`eads.core.types`) and a deterministic `
 
 ## 4. Reproducibility
 
-All examples use synthetic data and deterministic seeds. The `Benchmark` harness writes versioned `results.json` files. Optional adapters (OpenAI, Anthropic, Ollama, SciPy, PuLP, OR-Tools, sktime) are isolated behind lazy-import adapters and are not required for the core tests.
+All examples use synthetic data and fixed seeds. Timestamps come from an injectable clock, so a
+run under `FixedClock` is byte-reproducible; `LLMBackend.supports_seed` records whether the backend
+could honor the seed at all. The `Benchmark` harness executes each scenario `repeats` times and
+writes versioned `results.json` files. Optional adapters (OpenAI, Anthropic, Ollama, SciPy, PuLP,
+OR-Tools, sktime) are isolated behind lazy-import adapters and are not required for the core tests.
+
+Several paper-traced modules are stubs rather than implementations of the papers' methods; they are
+enumerated in `docs/limitations.md`.
 
 ## 5. Artifacts for citation
 

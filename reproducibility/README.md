@@ -11,7 +11,7 @@ From the repository root:
 pip install -e ".[dev,solvers,forecasters,pdf]"
 
 # 2. Run the full test suite
-python3 -m tests.run_tests
+python3 -m pytest -q
 
 # 3. Run the end-to-end examples
 PYTHONPATH=. python3 examples/quickstart.py

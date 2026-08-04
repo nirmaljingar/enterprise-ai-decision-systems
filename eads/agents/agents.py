@@ -3,7 +3,11 @@ from ..core.types import AgentMessage
 
 
 class Agent:
-    """Deterministic multi-agent collaboration primitive."""
+    """Multi-agent collaboration primitive.
+
+    Stub: ``act`` acknowledges without reading the messages, and ``swarm`` fans out fixed
+    replies. There is no negotiation, tool selection, or shared state.
+    """
 
     def __init__(self, name: str, role: str):
         self.name = name
