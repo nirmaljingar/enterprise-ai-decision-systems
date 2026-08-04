@@ -62,15 +62,16 @@ This repository becomes the official open companion to that research: it supplie
 
 ## The four IEEE papers
 
-| Paper | Identifier | Publication status | Contribution in this repo |
-|-------|------------|--------------------|---------------------------|
-| Modernizing Legacy Enterprise Platforms Using LLM-Driven Refactoring and AI-Assisted Architecture Transformation | Paper 1 | Unpublished — no verified DOI | `eads.modernization` — legacy parsing, dependency extraction, monolith-to-microservice decomposition |
-| Leveraging Large Language Models and Autonomous Agents for Unstructured Supply Chain Intelligence | Paper 2 | Unpublished — no verified DOI | `eads.knowledge_ingestion`, `eads.reasoning`, `eads.agents` — semantic extraction, evidence grounding, multi-agent collaboration |
-| Reliable LLM-Powered Decision Engines for Large-Scale Supply Chain Operations: Architecture, Safety, and Performance Guarantees | Paper 3 | Unpublished — no verified DOI | `eads.decision`, `eads.governance.safety` — LLM decision engine, mathematical optimization, safety filtering |
-| Operationalizing Generative and Agentic AI Across Complex Logistics Networks: Architecture, Governance, and Trust Models | Paper 4 | Unpublished — no verified DOI | `eads.governance` — policy, permissions, fallback, audit, and trust scoring |
+| Paper | DOI | Venue | Contribution in this repo |
+|-------|-----|-------|---------------------------|
+| Modernizing Legacy Enterprise Platforms Using LLM-Driven Refactoring and AI-Assisted Architecture Transformation | [10.1109/rmkmate69073.2026.11518954](https://doi.org/10.1109/rmkmate69073.2026.11518954) | RMKMATE 2026 | `eads.modernization` — legacy parsing, dependency extraction, monolith-to-microservice decomposition |
+| Leveraging Large Language Models and Autonomous Agents for Unstructured Supply Chain Intelligence | [10.1109/icetsis68266.2026.11548779](https://doi.org/10.1109/icetsis68266.2026.11548779) | ICETSIS 2026 | `eads.knowledge_ingestion`, `eads.reasoning`, `eads.agents` — semantic extraction, evidence grounding, multi-agent collaboration |
+| Reliable LLM-Powered Decision Engines for Large-Scale Supply Chain Operations: Architecture, Safety, and Performance Guarantees | [10.1109/IC_ASET69920.2026.11502212](https://doi.org/10.1109/IC_ASET69920.2026.11502212) | IC_ASET 2026 | `eads.decision`, `eads.governance.safety` — LLM decision engine, mathematical optimization, safety filtering |
+| Operationalizing Generative and Agentic AI Across Complex Logistics Networks: Architecture, Governance, and Trust Models | [10.1109/icetsis68266.2026.11549394](https://doi.org/10.1109/icetsis68266.2026.11549394) | ICETSIS 2026 | `eads.governance` — policy, permissions, fallback, audit, and trust scoring |
 
-DOIs are deliberately absent: no DOI is listed until it has been checked against the publisher's
-record. See [`CITING.md`](./CITING.md) for full citation guidance and [`docs/research_design.md`](./docs/research_design.md) for the complete research design.
+Every DOI above resolves through Crossref to the title and venue listed, and
+`tests/test_citations.py` re-checks that on every run — see [`CITING.md`](./CITING.md) for the full
+IEEE citations and [`docs/research_design.md`](./docs/research_design.md) for the research design.
 
 ## Why this repository matters
 

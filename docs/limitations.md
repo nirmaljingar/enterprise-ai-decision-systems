@@ -13,7 +13,8 @@ This is an open **research artifact**, not a production enterprise framework. Th
 
 - Real LLM backend adapters are optional; the default `FakeLLM` is deterministic but not a real model.
 - Numerical benchmarks are illustrative; rigorous evaluation against the IEEE corpus is ongoing.
-- None of the four papers has a verified DOI in this repository — see `CITING.md`.
+- The four paper DOIs resolve through Crossref to the titles claimed here, checked by
+  `tests/test_citations.py`; the papers themselves are not open access.
 
 ### Modules that are stubs
 
