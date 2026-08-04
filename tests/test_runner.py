@@ -6,6 +6,7 @@ approving injected orders fails here rather than being published as a result.
 """
 
 import json
+import platform
 import subprocess
 import sys
 from pathlib import Path
@@ -220,6 +221,18 @@ def test_every_manifest_declares_the_schema_it_was_written_against() -> None:
         assert "schema_version" in json.loads(path.read_text()), (
             f"{path.name} does not declare schema_version, so a format change cannot be detected"
         )
+
+
+def test_the_published_page_does_not_vary_by_interpreter() -> None:
+    """The page is committed and staleness-checked, so it must regenerate identically everywhere.
+
+    A provenance line naming the running Python version failed the staleness check on whichever
+    interpreter had not generated the page. The interpreter belongs in results.json, which is not
+    committed, rather than on a page every contributor regenerates.
+    """
+    page = (ROOT / "docs" / "benchmarks" / "index.md").read_text()
+    assert platform.python_version() not in page
+    assert eads.__version__ in page, "the page should still say which code version produced it"
 
 
 def test_results_record_the_code_version_that_produced_them(tmp_path: Path) -> None:

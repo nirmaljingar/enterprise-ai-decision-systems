@@ -105,8 +105,10 @@ def _render(rows: list[tuple[Manifest, dict[str, object]]]) -> str:
         lines.append(
             f"- **Seed:** {manifest.seed} · **Backend:** `{manifest.backend}` · "
             f"**Repeats:** {manifest.repeats} · **Manifest digest:** `{manifest.digest}`\n"
-            f"- **Produced by:** EADS {report['metadata']['eads_version']} on Python "
-            f"{report['metadata']['python']}"
+            # Deliberately not the Python version: the page is committed and staleness-checked, so
+            # anything varying by interpreter would make the check fail on whichever version did not
+            # generate it. results.json records the interpreter for the run that produced it.
+            f"- **Produced by:** EADS {report['metadata']['eads_version']}"
         )
         lines.append("")
         lines.append("| Scenario | Expected | Observed | Reason |")

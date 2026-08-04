@@ -42,8 +42,9 @@ comparison that is not checkable is not worth publishing:
 
 1. **The manifest and its digest**, both printed on the [results page](index.md). A manifest can be
    edited; the digest says which version you ran.
-2. **The code version.** Each benchmark records the EADS and Python version it was produced by. State
-   yours, since a metric's definition can change between releases.
+2. **The code version.** Each benchmark on the results page states the EADS version that produced it,
+   and its `results.json` also records the interpreter. State yours, since a metric's definition can
+   change between releases.
 3. **The label.** Every manifest here is an *Illustrative example*, so a comparison against it is a
    comparison of implementations against a deterministic backend -- not a claim about model
    behaviour.
