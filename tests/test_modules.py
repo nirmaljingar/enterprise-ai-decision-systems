@@ -86,7 +86,7 @@ def test_governance_blocks_high_value_order():
     )
     verdict = g.review(candidate, {"unit_price": 10.0})
     assert not verdict.approved
-    assert "manager_approval_required" in verdict.required_approvals
+    assert [a.approver_role for a in verdict.required_approvals] == ["manager"]
 
 
 def _signal_key(signal):

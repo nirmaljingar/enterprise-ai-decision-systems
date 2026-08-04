@@ -41,6 +41,32 @@ class Plan:
 
 
 @dataclass(frozen=True)
+class Actor:
+    """The principal a decision is requested on behalf of.
+
+    Approvals are meaningless without one: ``manager_approval_required`` names a role, not a
+    person, so an escalation that does not record who asked cannot be audited or routed.
+    """
+
+    id: str
+    roles: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class ApprovalRequirement:
+    """An approval a candidate still needs before it may execute.
+
+    ``approver_role`` is the role that can grant it. The requesting actor never satisfies its own
+    requirement, even when it holds the role: separation of duties is the point of the gate.
+    """
+
+    approver_role: str
+    reason: str
+    threshold: float | None = None
+    value: float | None = None
+
+
+@dataclass(frozen=True)
 class ProposedAction:
     """A model proposal after parsing, in the form the governance layer can check.
 
@@ -84,7 +110,7 @@ class Verdict:
     approved: bool
     reason: str
     violated_policies: list[str] = field(default_factory=list)
-    required_approvals: list[str] = field(default_factory=list)
+    required_approvals: list[ApprovalRequirement] = field(default_factory=list)
     trust_score: float = 0.0
     outcome: str = APPROVED
 
@@ -105,7 +131,8 @@ class AuditRecord:
     verdict: Verdict | None = None
     execution: ExecutionResult | None = None
     timestamp: str = field(default_factory=system_clock)
-    signatures: dict[str, str] = field(default_factory=dict)
+    policy_snapshot_id: str = ""
+    actor: Actor | None = None
 
 
 @dataclass
@@ -115,3 +142,4 @@ class DecisionRequest:
     signals: list[Signal]
     policy_snapshot: dict[str, Any] = field(default_factory=dict)
     seed: int = 42
+    actor: Actor = field(default_factory=lambda: Actor(id="unattributed"))
