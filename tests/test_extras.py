@@ -3,6 +3,8 @@ import json
 import tempfile
 from pathlib import Path
 
+import pytest
+
 from eads.core.pipeline import DecisionPipeline
 from eads.core.types import DecisionRequest, Signal
 from eads.decision.adapters import NaiveForecaster
@@ -123,9 +125,8 @@ def _solver_available(name: str) -> bool:
     return importlib.util.find_spec(name) is not None
 
 
+@pytest.mark.skipif(not _solver_available("scipy"), reason="requires the 'scipy' extra")
 def test_scipy_solver_when_installed():
-    if not _solver_available("scipy"):
-        return
     from eads.decision.adapters import SciPySolver
 
     request = DecisionRequest(
@@ -139,9 +140,8 @@ def test_scipy_solver_when_installed():
     assert result["order_quantity"] <= 500
 
 
+@pytest.mark.skipif(not _solver_available("pulp"), reason="requires the 'pulp' extra")
 def test_pulp_solver_when_installed():
-    if not _solver_available("pulp"):
-        return
     from eads.decision.adapters import PulpSolver
 
     request = DecisionRequest(
@@ -154,9 +154,8 @@ def test_pulp_solver_when_installed():
     assert result["order_quantity"] <= 400
 
 
+@pytest.mark.skipif(not _solver_available("ortools"), reason="requires the 'ortools' extra")
 def test_ortools_solver_when_installed():
-    if not _solver_available("ortools"):
-        return
     from eads.decision.adapters import OrtoolsSolver
 
     request = DecisionRequest(
@@ -169,9 +168,8 @@ def test_ortools_solver_when_installed():
     assert result["order_quantity"] <= 300
 
 
+@pytest.mark.skipif(not _solver_available("sktime"), reason="requires the 'forecasters' extra")
 def test_sktime_forecaster_when_installed():
-    if not _solver_available("sktime"):
-        return
     from eads.decision.adapters import SKTimeForecaster
 
     request = DecisionRequest(
