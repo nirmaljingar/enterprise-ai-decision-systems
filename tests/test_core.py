@@ -2,7 +2,7 @@ from eads.core.pipeline import DecisionPipeline
 from eads.core.types import DecisionCandidate, DecisionRequest, ProposedAction
 from eads.decision.decision import DecisionEngine
 from eads.governance import GovernanceLayer
-from eads.governance.safety import UNPARSEABLE_ACTION
+from eads.governance.safety import UNPARSEABLE_ACTION, SafetyFilter
 from eads.synthetic_data import SupplyChainGenerator
 
 
@@ -112,3 +112,48 @@ def test_clean_order_is_approved():
     verdict = GovernanceLayer().review(_order(10), {"unit_price": 1.0})
     assert verdict.outcome == "approved"
     assert verdict.approved
+
+
+def test_pipeline_audits_every_decision():
+    governance = GovernanceLayer()
+    pipeline = DecisionPipeline(governance=governance)
+    request = DecisionRequest(
+        request_id="audit-1",
+        goal="replenish SKU-1001",
+        signals=SupplyChainGenerator(seed=4).generate(2),
+        policy_snapshot={"region": "US"},
+    )
+    pipeline.run(request)
+    pipeline.run(request)
+    assert len(governance.audit.records) == 2
+    assert governance.audit.records[0]["request_id"] == "audit-1"
+
+
+def test_blocked_decision_uses_fallback_handler():
+    governance = GovernanceLayer(safety_filter=SafetyFilter(hard_limits={"max_order_quantity": 1}))
+    pipeline = DecisionPipeline(governance=governance)
+    record = pipeline.run(
+        DecisionRequest(
+            request_id="fb-1",
+            goal="place order for SKU-1001",
+            signals=SupplyChainGenerator(seed=4).generate(2),
+            policy_snapshot={"region": "US"},
+        )
+    )
+    assert record.execution.status == "blocked"
+    assert record.execution.output["safe_action"] == "discard_and_notify"
+
+
+def test_escalated_decision_is_not_reported_as_blocked():
+    pipeline = DecisionPipeline()
+    record = pipeline.run(
+        DecisionRequest(
+            request_id="esc-1",
+            goal="place order for SKU-1001",
+            signals=SupplyChainGenerator(seed=4).generate(2),
+            policy_snapshot={"region": "US", "unit_price": 10.0},
+        )
+    )
+    assert record.verdict.outcome == "escalated"
+    assert record.execution.status == "escalated"
+    assert record.execution.output["safe_action"] == "request_human_review"

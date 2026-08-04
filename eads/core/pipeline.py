@@ -63,6 +63,7 @@ class DecisionPipeline:
             verdict,
             execution,
         )
+        self.governance.audit.log(record)
         return record
 
     def _modernize(self, legacy_signals: list[Signal]) -> list[Evidence]:
@@ -84,18 +85,11 @@ class DecisionPipeline:
         return evidence
 
     def _review(self, candidate: DecisionCandidate, request: DecisionRequest) -> Verdict:
-        if self.governance is not None:
-            return self.governance.review(candidate, request.policy_snapshot)
-        return Verdict(approved=True, reason="no governance configured")
+        return self.governance.review(candidate, request.policy_snapshot)
 
     def _execute(self, candidate: DecisionCandidate, verdict: Verdict) -> ExecutionResult:
         if not verdict.approved:
-            return ExecutionResult(
-                action_id="fallback",
-                status="blocked",
-                output={"reason": verdict.reason},
-                latency_ms=0.0,
-            )
+            return self.governance.fallback.handle(candidate, verdict.reason, verdict.outcome)
         action_id = candidate.actions[0].type if candidate.actions else "none"
         return ExecutionResult(
             action_id=action_id,
@@ -130,7 +124,12 @@ class DecisionPipeline:
                     "actions": [asdict(a) for a in candidate.actions],
                     "evidence_refs": candidate.evidence_refs,
                 },
-                {"step": "verdict", "approved": verdict.approved, "reason": verdict.reason},
+                {
+                    "step": "verdict",
+                    "outcome": verdict.outcome,
+                    "approved": verdict.approved,
+                    "reason": verdict.reason,
+                },
                 {"step": "execute", "status": execution.status},
             ]
         )
