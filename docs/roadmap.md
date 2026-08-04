@@ -1,33 +1,34 @@
 # Roadmap
 
-Current phase: **Phase 2 / early Phase 3** — repository design is largely complete; per-module implementation is in progress.
+Current state: every module that traces to a paper implements a method rather than a placeholder,
+and the repository is released as v2.0.0 and archived on Zenodo. What each implementation cannot do
+is stated per module in [Limitations](limitations.md); this page is only about what comes next.
 
-## Completed
+## Done
 
-- Phase 1 Research Design Document (`docs/research_design.md`)
-- Core `eads.core.types` data model and `DecisionPipeline` skeleton
-- Governance layer scaffolding (`eads.governance.*` sub-packages)
-- Basic evaluation metrics and benchmark harness skeleton
-- Supply-chain synthetic data generator
-- `README.md`, `CITATION.cff`, `CITING.md`, `LICENSE`
-- CI workflows: `tests.yml`, `lint.yml`, `typecheck.yml`, `docs.yml`
+- Phase 1 research design ([`research_design.md`](research_design.md)) and Phase 2 repository design.
+- Typed data model, `DecisionPipeline`, and injectable clocks for reproducible runs.
+- Governance: policy, safety, permissions, fallback, audit, and trust, checking typed fields and
+  failing closed on anything it cannot parse.
+- Knowledge ingestion, reasoning, agents, modernization, and the synthetic generators.
+- Benchmark harness, manifests, and a generated results page gated against staleness.
+- Per-module `README.md` files, tests, and the four CI workflows (`tests`, `lint`, `typecheck`,
+  `docs`).
+- Release v2.0.0 with a Zenodo concept DOI (`10.5281/zenodo.21797859`).
 
-## In progress
+## Not done, and why it matters
 
-- Full-text paper extraction (Phase 1.5)
-- Filling module stubs with runnable implementations
-- Per-module `README.md` files and tests
-- Domain-agnostic synthetic data generators
-
-## Planned
-
-1. `eads.core` — finalize pipeline contract and deterministic state tracking.
-2. `eads.governance.audit` — immutable trace records every module must write.
-3. `eads.knowledge_ingestion` — produce the evidence graph.
-4. `eads.reasoning` — build plans on top of evidence.
-5. `eads.decision` — combine plans with solver/forecaster adapters.
-6. `eads.governance` — integrate policy, safety, permissions, fallback, audit, and trust.
-7. `eads.agents` — add multi-agent collaboration.
-8. `eads.modernization` — legacy modernization end-to-end example.
-9. `eads.evaluation` + `benchmarks/` — reproducible metrics.
-10. `examples/` and `docs/` — tutorials, final diagrams, publication-ready docs.
+1. **Full paper text extraction (Phase 1.5).** The design derives from the papers' abstracts.
+   `eads.paper_extraction` can parse locally licensed PDFs, but no extracted corpus ships and no
+   statement here is traceable to full paper text.
+2. **A benchmark other systems can be scored against.** Today the manifests measure this
+   implementation. An adapter interface would let a reader score their own guard and report a
+   comparable number, which is the difference between a demo and a baseline.
+3. **Metrics that need instrumentation the pipeline does not have**: tool-invocation precision,
+   decision latency, and token efficiency. Each is listed as *No* in
+   [Evaluation](evaluation.md) rather than estimated.
+4. **Tamper-evident audit.** `AuditLogger` is in-memory and unsigned; signing needs key management
+   and canonical serialization, neither of which exists here.
+5. **Model-backed implementations.** Every paper-traced module is lexical and rule-based, which is
+   what makes a benchmark run replayable. Anything model-backed would need the determinism contract
+   restated first.
