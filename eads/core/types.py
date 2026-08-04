@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
 from typing import Any
+
+from .clock import system_clock
 
 
 @dataclass(frozen=True)
@@ -9,7 +10,7 @@ class Signal:
     source: str
     content: str
     metadata: dict[str, Any] = field(default_factory=dict)
-    timestamp: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
+    timestamp: str = field(default_factory=system_clock)
 
 
 @dataclass(frozen=True)
@@ -28,7 +29,7 @@ class AgentMessage:
     role: str
     content: str
     tool_call: dict[str, Any] | None = None
-    timestamp: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
+    timestamp: str = field(default_factory=system_clock)
 
 
 @dataclass
@@ -39,22 +40,53 @@ class Plan:
     evidence_refs: list[str] = field(default_factory=list)
 
 
+@dataclass(frozen=True)
+class ProposedAction:
+    """A model proposal after parsing, in the form the governance layer can check.
+
+    ``parsed`` records whether the model output matched a known action grammar. Governance
+    rejects actions with ``parsed is False``: an action that cannot be understood cannot be
+    proven safe.
+    """
+
+    type: str
+    raw_value: str
+    quantity: int | None = None
+    region: str | None = None
+    label: str | None = None
+    parsed: bool = False
+
+
 @dataclass
 class DecisionCandidate:
     plan_id: str
-    actions: list[dict[str, Any]]
+    actions: list[ProposedAction]
     expected_outcome: dict[str, Any] = field(default_factory=dict)
     evidence_refs: list[str] = field(default_factory=list)
     confidence: float = 0.0
 
 
+APPROVED = "approved"
+REJECTED = "rejected"
+ESCALATED = "escalated"
+
+
 @dataclass
 class Verdict:
+    """Outcome of policy, safety, and permission review.
+
+    ``outcome`` distinguishes the three terminal states the architecture calls for:
+    ``approved`` (execute), ``rejected`` (a policy or safety violation, never executable), and
+    ``escalated`` (permissible but requires a human approval that has not been granted).
+    ``approved`` is the boolean shorthand for ``outcome == "approved"``.
+    """
+
     approved: bool
     reason: str
     violated_policies: list[str] = field(default_factory=list)
     required_approvals: list[str] = field(default_factory=list)
     trust_score: float = 0.0
+    outcome: str = APPROVED
 
 
 @dataclass
@@ -72,7 +104,7 @@ class AuditRecord:
     decision: DecisionCandidate | None = None
     verdict: Verdict | None = None
     execution: ExecutionResult | None = None
-    timestamp: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
+    timestamp: str = field(default_factory=system_clock)
     signatures: dict[str, str] = field(default_factory=dict)
 
 
