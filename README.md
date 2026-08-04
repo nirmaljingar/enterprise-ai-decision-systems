@@ -298,8 +298,8 @@ reproduction of the papers. What is actually implemented:
 - `eads.knowledge_ingestion` and `eads.reasoning` are implemented, but lexically: claims carry source
   spans and derived confidence, and planning walks a graph whose edges are shared entities and
   matching figures. Neither does coreference, negation scope, or entity linking.
-- Not present: prompt/token logging, tool-invocation and latency metrics, a Zenodo DOI, a PyPI
-  release, and any experimental result from the papers. The published benchmark numbers are
+- Not present: prompt/token logging, tool-invocation and latency metrics, a PyPI release, and any
+  experimental result from the papers. The published benchmark numbers are
   illustrative runs of this implementation, not paper results.
 
 Remaining work is tracked in [`docs/roadmap.md`](./docs/roadmap.md) and

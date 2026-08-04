@@ -10,11 +10,16 @@ No. It is a research artifact designed for study, cloning, modification, benchma
 
 ## Can I use this for my own domain?
 
-Yes. The architecture is domain-agnostic. Supply chain is the primary example, but the same lifecycle applies to healthcare, finance, IT operations, and customer support. See `examples/` for planned domain walkthroughs.
+Yes. The architecture is domain-agnostic. Supply chain is the primary example, and `examples/`
+carries runnable walkthroughs for healthcare, finance, IT operations, and customer support, each
+over its own synthetic generator.
 
 ## Where are the real algorithms from the papers?
 
-The current design is based on public abstracts. Phase 1.5 requires full-text PDF extraction to finalize exact algorithms and numerical claims. See `docs/research_design.md` and `docs/limitations.md`.
+The modules implement methods described by the papers' public abstracts, not algorithms lifted from
+their full text -- which has never been extracted here, so no line of code is traceable to a
+published algorithm. `eads.paper_extraction` is the tooling for that step, and it ships unrun. See
+`docs/research_design.md` and `docs/limitations.md`.
 
 ## Do I need an LLM API key?
 

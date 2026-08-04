@@ -44,4 +44,4 @@ The repository is the official, open, original research companion for EADS. It i
 | Phase 1 | Research Design Document | Complete |
 | Phase 1.5 | Full paper text extraction | **Not done** — tooling only (`eads.paper_extraction`); the public index in `data/papers/papers.json` is bibliographic, not extracted |
 | Phase 2 | Complete repository design | Complete |
-| Phase 3 | Incremental per-module implementation | In progress — five modules are still stubs; see [`limitations.md`](limitations.md) |
+| Phase 3 | Incremental per-module implementation | Complete — every paper-traced module implements a method rather than a placeholder, lexically and without a model; the cost is stated per module in [`limitations.md`](limitations.md) |

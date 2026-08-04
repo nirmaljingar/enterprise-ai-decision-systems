@@ -33,9 +33,11 @@ python examples/supply_chain.py
 ```
 
 Benchmark manifests live in `benchmarks/manifests/` and each is labeled `Published methodology` or
-`Illustrative example`; `Manifest.load` rejects any other label. Results are emitted to
+`Illustrative example`; `Manifest.load` rejects any other label. Manifest runs are emitted to
 `benchmarks/results/<domain>/<benchmark_id>/results.json`, and the current numbers are published in
-[Benchmarks](benchmarks/index.md).
+[Benchmarks](benchmarks/index.md). The domain example scripts use the same harness directly and
+write to `benchmarks/results/<domain>/results.json`; those runs are illustrative and are not
+published.
 
 ```bash
 python scripts/run_benchmarks.py

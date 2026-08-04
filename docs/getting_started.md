@@ -29,15 +29,23 @@ request = DecisionRequest(
     request_id="demo",
     goal="decide replenishment order for SKU-1001",
     signals=SupplyChainGenerator(seed=42).generate(3),
+    policy_snapshot={"region": "US", "unit_price": 10.0},
 )
 
 pipeline = DecisionPipeline(governance=GovernanceLayer(), decision_engine=DecisionEngine())
 record = pipeline.run(request)
 
-print("Approved:", record.verdict.approved)
+print("Outcome:", record.verdict.outcome)   # approved | rejected | escalated
 print("Reason:", record.verdict.reason)
 print("Trace:", [t["step"] for t in record.trace])
 ```
+
+This prints `escalated`: the order is within policy but its value exceeds the approval threshold, so
+it is routed to a `manager` rather than executed. Escalation is not rejection and not authorization.
+
+The policy snapshot supplies a region because governance fails closed: drop it and the run comes
+back `rejected` with `region_unspecified`, because an action whose region cannot be established is
+not an action that can be checked.
 
 ## 3. Run domain benchmarks
 
@@ -59,4 +67,5 @@ python3 -m pytest -q
 
 ## 5. Reproducibility
 
-See `reproducibility/README.md` for the full reproduction suite and `PUBLICATION.md` for DOI/PyPI release instructions.
+See `reproducibility/README.md` for the full reproduction suite and [Releasing](releasing.md)
+for how a citable release and its DOI are produced.

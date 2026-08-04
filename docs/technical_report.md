@@ -35,8 +35,9 @@ could honor the seed at all. The `Benchmark` harness executes each scenario `rep
 writes versioned `results.json` files. Optional adapters (OpenAI, Anthropic, Ollama, SciPy, PuLP,
 OR-Tools, sktime) are isolated behind lazy-import adapters and are not required for the core tests.
 
-Several paper-traced modules are stubs rather than implementations of the papers' methods; they are
-enumerated in `docs/limitations.md`.
+Every paper-traced module implements a method, but lexically and without calling a model, which is
+what makes a run replayable. What each one therefore cannot do is enumerated in
+`docs/limitations.md`.
 
 ## 5. Artifacts for citation
 
@@ -44,3 +45,4 @@ enumerated in `docs/limitations.md`.
 - Citation metadata: `CITATION.cff`
 - Paper DOIs: see `CITING.md`
 - Reproducibility suite: `reproducibility/`
+- Archived release: Zenodo concept DOI `10.5281/zenodo.21797859`
