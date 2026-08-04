@@ -138,6 +138,8 @@ def test_audit_completeness_detects_missing_fields():
         "verdict": {},
         "execution": {},
         "timestamp": "t",
+        "policy_snapshot_id": "pol_0",
+        "actor": {"id": "planner-7", "roles": ()},
     }
     assert audit_completeness([{"audit_record": complete}]) == 1.0
     incomplete = dict(complete, verdict=None)

@@ -13,7 +13,9 @@ This is an open **research artifact**, not a production enterprise framework. Th
 
 - Real LLM backend adapters are optional; the default `FakeLLM` is deterministic but not a real model.
 - Numerical benchmarks are illustrative; rigorous evaluation against the IEEE corpus is ongoing.
-- None of the four papers has a verified DOI in this repository — see `CITING.md`.
+- Approvals are routed to a role, and separation of duties is enforced, but no approval is ever
+  *granted*: there is no approver interface, credential, or grant record. Escalation is a terminal
+  state here.
 
 ### Modules that are stubs
 
@@ -32,7 +34,8 @@ These trace to a paper but do not implement the paper's method. Each says so in 
 
 - Prompt, completion, and token-usage logging (and therefore token-efficiency metrics).
 - Tool-invocation precision and decision-latency metrics.
-- Signed or externally persisted audit logs; the `AuditLogger` is in-memory only.
+- Signed or externally persisted audit logs; the `AuditLogger` is in-memory only, and `AuditRecord`
+  carries no `signatures` field because no signing mechanism exists to back one.
 - A PyPI release and a Zenodo DOI.
 
 ## What this is not

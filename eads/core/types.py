@@ -133,7 +133,6 @@ class AuditRecord:
     timestamp: str = field(default_factory=system_clock)
     policy_snapshot_id: str = ""
     actor: Actor | None = None
-    signatures: dict[str, str] = field(default_factory=dict)
 
 
 @dataclass

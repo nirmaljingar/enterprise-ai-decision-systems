@@ -17,6 +17,8 @@ REQUIRED_AUDIT_FIELDS = (
     "verdict",
     "execution",
     "timestamp",
+    "policy_snapshot_id",
+    "actor",
 )
 RECOVERED_STATUSES = frozenset({"blocked", "escalated"})
 WITHHELD_OUTCOMES = frozenset({"rejected", "escalated"})
