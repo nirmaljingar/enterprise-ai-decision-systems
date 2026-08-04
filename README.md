@@ -3,10 +3,14 @@
 [![Tests](https://github.com/nirmaljingar/enterprise-ai-decision-systems/actions/workflows/tests.yml/badge.svg)](https://github.com/nirmaljingar/enterprise-ai-decision-systems/actions/workflows/tests.yml)
 [![Docs](https://github.com/nirmaljingar/enterprise-ai-decision-systems/actions/workflows/docs.yml/badge.svg)](https://github.com/nirmaljingar/enterprise-ai-decision-systems/actions/workflows/docs.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](./LICENSE)
-[![PyPI](https://img.shields.io/badge/PyPI-v1.0.0-blue.svg)](https://pypi.org/project/enterprise-ai-decision-systems/)
+[![Status](https://img.shields.io/badge/status-alpha-orange.svg)](#status)
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nirmaljingar/enterprise-ai-decision-systems/blob/main/notebooks/eads_quickstart.ipynb)
 
-A reproducible, modular Python toolkit for building **reliable, safe, and auditable enterprise AI decisions** with large language models, safety filters, and governance.
+A modular Python **research skeleton** for studying how reliable, safe, and auditable enterprise AI
+decisions can be structured: a typed decision pipeline, a fail-closed governance layer, synthetic
+data generators, and a benchmark harness. It is alpha software and not published to PyPI; several
+modules are deliberate stubs (see [Status](#status) and
+[`docs/limitations.md`](./docs/limitations.md)).
 
 **Install and run in 60 seconds:**
 
@@ -23,13 +27,18 @@ request = DecisionRequest(
     request_id='demo',
     goal='decide replenishment order for SKU-1001',
     signals=SupplyChainGenerator(seed=42).generate(3),
+    policy_snapshot={'region': 'US', 'unit_price': 10.0},
 )
 record = DecisionPipeline(governance=GovernanceLayer(), decision_engine=DecisionEngine()).run(request)
-print('Approved:', record.verdict.approved)
+print('Outcome:', record.verdict.outcome)   # approved | rejected | escalated
 print('Reason:', record.verdict.reason)
+print('Execution:', record.execution.status)
 print('Trace:', [t['step'] for t in record.trace])
 "
 ```
+
+A region is supplied in the policy snapshot because governance fails closed: an action whose
+region it cannot establish is rejected rather than waved through.
 
 ## Live demo
 
@@ -67,7 +76,7 @@ record. See [`CITING.md`](./CITING.md) for full citation guidance and [`docs/res
 
 - **Open and citable.** Released as a public research artifact under Apache-2.0 with `CITATION.cff`, `CITING.md`, and `LICENSE`.
 - **Domain-agnostic.** Supply chain is the primary worked example, but the architecture is reusable for healthcare, finance, IT operations, customer support, and other domains.
-- **Reproducible.** All examples use synthetic data, deterministic seeds, and pinned dependencies. The same input, seed, and policy snapshot must produce the same observable trace.
+- **Reproducible.** All examples use synthetic data and fixed seeds. With a fixed clock (`eads.core.clock.FixedClock`) and a seed-honoring backend, the same input, seed, and policy snapshot produce a byte-identical `AuditRecord`.
 - **Transparent.** Every module, metric, and example either traces to an IEEE paper or is explicitly labeled as a *Reference implementation*, *Educational example*, or *Suggested extension*.
 - **Vendor-neutral.** The core implementation uses only the Python standard library. Optional adapters for LLM backends, solvers, and forecasters are isolated so the architecture stays portable.
 
@@ -95,10 +104,10 @@ The decision lifecycle is: **Sense / Ingest → Modernize / Extract → Reason /
 | Module | Traced to | Responsibility |
 |--------|-----------|--------------|
 | `eads.core` | Reference implementation | Shared data model, pipeline contract, and plugin interface |
-| `eads.modernization` | Paper 1 | Synthetic legacy-code parsing and modernization |
-| `eads.knowledge_ingestion` | Paper 2 | Semantic extraction from unstructured enterprise signals |
-| `eads.reasoning` | Papers 2, 3 | Evidence-backed, context-aware reasoning |
-| `eads.agents` | Papers 2, 4 | Deterministic multi-agent collaboration primitives |
+| `eads.modernization` | Paper 1 | *Stub:* import/counting heuristics over legacy source, not a refactoring engine |
+| `eads.knowledge_ingestion` | Paper 2 | *Stub:* copies each signal verbatim into one evidence claim; no semantic extraction |
+| `eads.reasoning` | Papers 2, 3 | *Stub:* fixed plan skeleton over the available evidence |
+| `eads.agents` | Papers 2, 4 | *Stub:* message-passing primitives; no autonomous collaboration |
 | `eads.decision` | Paper 3 | LLM + optimization + forecasting + safety filter |
 | `eads.governance` | Papers 1, 3, 4 | Policy, safety, permissions, fallback, audit, and trust |
 | `eads.evaluation` | Papers 1–4 | Reproducible benchmark harness and metrics |
@@ -155,32 +164,39 @@ The `eads.core.types` module defines the shared data model:
 - `AgentMessage` — typed agent-to-agent messages.
 - `DecisionCandidate` — a proposed action.
 - `Verdict` — the result of policy, safety, and permission checks.
-- `ExecutionResult` — deterministic tool invocation output.
-- `AuditRecord` — an immutable trace of a complete decision cycle.
+- `ProposedAction` — a parsed, checkable model proposal (`parsed=False` means governance rejects it).
+- `ExecutionResult` — tool invocation output.
+- `AuditRecord` — an append-only trace of a complete decision cycle.
 
 ## Evaluation metrics
 
 The `eads.evaluation` module implements the reproducible metrics from the research design:
 
-| Metric | Paper trace | Status |
-|--------|-------------|--------|
-| Decision Consistency | Paper 3 | Published methodology |
-| Policy Compliance | Papers 3, 4 | Published methodology |
-| Evidence Grounding Rate | Paper 2 | Published methodology |
-| Fallback Recovery Rate | Papers 3, 4 | Published methodology |
-| Audit Completeness | Paper 4 | Published methodology |
-| Tool Invocation Precision | Paper 3 | Suggested extension |
-| Decision Latency | Paper 3 | Suggested extension |
-| Token Efficiency | Papers 1–3 | Suggested extension |
+| Metric | Paper trace | Implemented |
+|--------|-------------|-------------|
+| `approval_rate` | — | Yes (throughput, not correctness) |
+| `policy_compliance` | Papers 3, 4 | Yes — expected vs actual outcome on labelled scenarios |
+| `decision_consistency` | Paper 3 | Yes — agreement across `repeats` runs of one scenario |
+| `evidence_grounding_rate` | Paper 2 | Yes — fraction of evidence references that resolve |
+| `fallback_recovery_rate` | Papers 3, 4 | Yes — injected violations actually withheld |
+| `audit_completeness` | Paper 4 | Yes — required trace fields present |
+| Tool Invocation Precision | Paper 3 | No — suggested extension |
+| Decision Latency | Paper 3 | No — suggested extension |
+| Token Efficiency | Papers 1–3 | No — suggested extension |
 
 No numerical results or experimental claims are fabricated. Benchmarks live in `benchmarks/` and produce versioned `results.json` files.
 
-## Determinism contract
+## Reproducibility
 
-- The `DecisionPipeline` records a `PipelineState` at every step.
-- Re-running with the same `input`, `seed`, `policy_snapshot`, and `tool_versions` produces the same `PipelineState` trace.
-- LLM calls are wrapped in a seedable `LLMBackend` adapter that logs prompts, completions, and token usage.
-- Any remaining non-determinism is captured as a `DecisionConsistency` metric rather than ignored.
+- Timestamps come from an injectable clock, so `DecisionPipeline(clock=FixedClock())` plus fixed
+  generator seeds make two runs of one request produce identical `AuditRecord` values
+  (`tests/test_reproducibility.py` asserts this).
+- `LLMBackend.supports_seed` declares whether a backend can honor a seed; the pipeline records it
+  on the trace, so a run against a backend without seed support is not mistaken for a
+  reproducible one. The Anthropic API exposes no seed parameter.
+- Residual non-determinism is measured by `decision_consistency` over repeated runs rather than
+  assumed away.
+- Prompt, completion, and token logging is **not** implemented.
 
 ## Citation
 
@@ -192,4 +208,18 @@ This project is released under the [Apache-2.0 license](./LICENSE).
 
 ## Status
 
-This repository is a **v1.0.0 release candidate**. The four IEEE EADS papers are extracted, modules trace to paper concepts, and the full pipeline is implemented and tested (27 passing tests). Remaining work — optional solver/forecaster/live-LLM execution, Zenodo DOI, PyPI release, and deeper numerical reproductions — is documented in [`docs/roadmap.md`](./docs/roadmap.md) and [`docs/limitations.md`](./docs/limitations.md). See [`PUBLICATION.md`](./PUBLICATION.md) for release and citation instructions.
+This repository is **alpha research software**, not a production framework and not a numerical
+reproduction of the papers. What is actually implemented:
+
+- End to end: the typed pipeline (ingest → modernize → reason → decide → govern → execute → audit),
+  the fail-closed governance layer (policy, safety, permissions, escalation, fallback, audit,
+  trust), reproducible records under a fixed clock, synthetic generators, and the benchmark harness
+  with six metrics.
+- Stubs, despite tracing to a paper: `eads.modernization`, `eads.knowledge_ingestion`,
+  `eads.reasoning`, `eads.agents`, and `TrustScorer` use counting or copying heuristics rather than
+  the algorithms the papers describe. Each says so in its docstring.
+- Not present: prompt/token logging, tool-invocation and latency metrics, a Zenodo DOI, a PyPI
+  release, verified paper DOIs, and any experimental result.
+
+Remaining work is tracked in [`docs/roadmap.md`](./docs/roadmap.md) and
+[`docs/limitations.md`](./docs/limitations.md).
