@@ -3,7 +3,11 @@ from ..core.types import Evidence, Plan
 
 
 class ReasoningEngine:
-    """Evidence-backed planning for decision support."""
+    """Evidence-backed planning for decision support.
+
+    Stub: returns a fixed single-step plan that references every piece of evidence. It does
+    not decompose the goal, order steps, or reason about the evidence contents.
+    """
 
     def plan(self, evidence: list[Evidence], goal: str) -> Plan:
         return Plan(

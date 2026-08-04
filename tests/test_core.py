@@ -3,6 +3,7 @@ from eads.core.types import DecisionCandidate, DecisionRequest, ProposedAction
 from eads.decision.decision import DecisionEngine
 from eads.governance import GovernanceLayer
 from eads.governance.safety import UNPARSEABLE_ACTION, SafetyFilter
+from eads.governance.trust import TrustScorer
 from eads.synthetic_data import SupplyChainGenerator
 
 
@@ -100,7 +101,8 @@ def test_high_value_order_is_escalated_not_rejected():
     assert verdict.outcome == "escalated"
     assert not verdict.approved
     assert verdict.violated_policies == []
-    assert "manager_approval_required" in verdict.required_approvals
+    assert [a.approver_role for a in verdict.required_approvals] == ["manager"]
+    assert verdict.required_approvals[0].value == 6000.0
 
 
 def test_violation_outranks_pending_approval():
@@ -157,3 +159,14 @@ def test_escalated_decision_is_not_reported_as_blocked():
     assert record.verdict.outcome == "escalated"
     assert record.execution.status == "escalated"
     assert record.execution.output["safe_action"] == "request_human_review"
+
+
+def test_trust_score_is_penalized_for_unparseable_actions():
+    unparsed = DecisionCandidate(
+        plan_id="t",
+        actions=[ProposedAction(type="unknown", raw_value="ship it", parsed=False)],
+        expected_outcome={},
+        confidence=1.0,
+    )
+    assert TrustScorer().score(unparsed) == 0.5
+    assert TrustScorer().score(_order(10)) == 0.5  # confidence 0.5, no penalty

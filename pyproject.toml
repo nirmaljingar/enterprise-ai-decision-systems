@@ -21,42 +21,40 @@ keywords = [
     "reproducible research",
 ]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Typing :: Typed",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-dependencies = ["pydantic>=2.0"]
+# The core package is standard library only: every optional integration lives in an extra.
+dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0", "ruff>=0.4", "mypy>=1.10", "coverage>=7.0"]
-docs = ["pydantic>=2.0", "mkdocs-material>=9.5", "mkdocs>=1.6", "pymdown-extensions>=10.0"]
-openai = ["pydantic>=2.0", "openai>=1.0"]
-anthropic = ["pydantic>=2.0", "anthropic>=0.30"]
-ollama = ["pydantic>=2.0", "ollama>=0.2"]
-transformers = ["pydantic>=2.0", "transformers>=4.40", "torch>=2.0"]
-solvers = ["pydantic>=2.0", "scipy>=1.12", "pulp>=2.8", "ortools>=9.9", "scikit-learn>=1.4"]
-forecasters = ["sktime>=0.30", "pandas>=2.0", "numpy>=1.26"]
-pdf = ["pymupdf>=1.24"]
+dev = ["pytest>=8.0,<9", "ruff>=0.4,<1", "mypy>=1.10,<2", "coverage>=7.0,<8"]
+docs = ["mkdocs>=1.6,<2", "mkdocs-material>=9.5,<10", "pymdown-extensions>=10.0,<11"]
+openai = ["openai>=1.0,<2"]
+anthropic = ["anthropic>=0.30,<1"]
+ollama = ["ollama>=0.2,<1"]
+transformers = ["transformers>=4.40,<5", "torch>=2.0,<3"]
+solvers = [
+    "scipy>=1.12,<2",
+    "pulp>=2.8,<3",
+    "ortools>=9.9,<10",
+    "scikit-learn>=1.4,<2",
+]
+forecasters = ["sktime>=0.30,<1", "pandas>=2.0,<3", "numpy>=1.26,<3"]
+pdf = ["pymupdf>=1.24,<2"]
+# `all` deliberately excludes torch: it is a multi-gigabyte download that no test or example
+# needs. Install the `transformers` extra explicitly to get it.
 all = [
-    "pydantic>=2.0",
-    "openai>=1.0",
-    "anthropic>=0.30",
-    "ollama>=0.2",
-    "transformers>=4.40",
-    "torch>=2.0",
-    "scipy>=1.12",
-    "pulp>=2.8",
-    "ortools>=9.9",
-    "scikit-learn>=1.4",
-    "sktime>=0.30",
-    "pandas>=2.0",
-    "numpy>=1.26",
-    "pymupdf>=1.24",
+    "enterprise-ai-decision-systems[anthropic,docs,forecasters,ollama,openai,pdf,solvers]",
 ]
 
 [project.urls]
@@ -67,6 +65,14 @@ Documentation = "https://nirmaljingar.github.io/enterprise-ai-decision-systems"
 
 [tool.hatch.build.targets.wheel]
 packages = ["eads"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers --strict-config"
+
+[tool.coverage.run]
+source = ["eads"]
+branch = true
 
 [tool.ruff]
 line-length = 100

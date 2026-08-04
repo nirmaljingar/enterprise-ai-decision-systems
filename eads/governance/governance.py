@@ -1,6 +1,13 @@
 from typing import Any
 
-from ..core.types import APPROVED, ESCALATED, REJECTED, DecisionCandidate, Verdict
+from ..core.types import (
+    APPROVED,
+    ESCALATED,
+    REJECTED,
+    Actor,
+    DecisionCandidate,
+    Verdict,
+)
 from .audit import AuditLogger
 from .fallback import FallbackHandler
 from .permissions import PermissionGate
@@ -29,13 +36,16 @@ class GovernanceLayer:
         self.audit = audit_logger or AuditLogger()
 
     def review(
-        self, candidate: DecisionCandidate, context: dict[str, Any] | None = None
+        self,
+        candidate: DecisionCandidate,
+        context: dict[str, Any] | None = None,
+        actor: Actor | None = None,
     ) -> Verdict:
         context = context or {}
         policy_violations = self.policy.evaluate(candidate, context)
         safety_violations = self.safety.check(candidate, context)
         all_violations = policy_violations + safety_violations
-        approvals = self.permissions.approvals(candidate, context)
+        approvals = self.permissions.approvals(candidate, context, actor)
         trust = self.trust.score(candidate, context)
         if all_violations:
             # A violation is terminal: no approval can authorize an unsafe action.
@@ -43,7 +53,9 @@ class GovernanceLayer:
             reason = "; ".join(all_violations)
         elif approvals:
             outcome = ESCALATED
-            reason = "; ".join(approvals)
+            reason = "; ".join(
+                f"{approval.approver_role}: {approval.reason}" for approval in approvals
+            )
         else:
             outcome = APPROVED
             reason = "passed"
