@@ -59,4 +59,5 @@ python3 -m pytest -q
 
 ## 5. Reproducibility
 
-See `reproducibility/README.md` for the full reproduction suite and `PUBLICATION.md` for DOI/PyPI release instructions.
+See `reproducibility/README.md` for the full reproduction suite and [Releasing](releasing.md)
+for how a citable release and its DOI are produced.
