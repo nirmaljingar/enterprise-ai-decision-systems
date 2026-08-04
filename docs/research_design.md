@@ -9,7 +9,7 @@ This document is the Phase 1 research foundation and Phase 2 repository design f
 - **Paper 3** — *Reliable LLM-Powered Decision Engines for Large-Scale Supply Chain Operations: Architecture, Safety, and Performance Guarantees*.
 - **Paper 4** — *Operationalizing Generative and Agentic AI Across Complex Logistics Networks: Architecture, Governance, and Trust Models*.
 
-None of the four papers carries a verified DOI in this repository yet; see [`CITING.md`](../CITING.md).
+None of the four papers carries a verified DOI in this repository yet; see [`CITING.md`](https://github.com/nirmaljingar/enterprise-ai-decision-systems/blob/main/CITING.md).
 
 > **Note on status.** This design is now grounded in the full-text PDF extraction. Exact algorithms, evaluation protocols, and numerical claims are present in `data/papers/extracted/`. Implementation details not directly traceable to a published paper are labeled as *Reference implementation*, *Educational example*, or *Suggested extension*.
 
