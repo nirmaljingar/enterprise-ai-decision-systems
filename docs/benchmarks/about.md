@@ -35,12 +35,46 @@ The results page is generated, never hand-edited: a table typed by hand is a cla
 is a result. `tests/test_runner.py` also asserts that two runs of a manifest are byte-identical, so
 the published numbers are reproducible rather than merely recorded.
 
-## Adding one
+## Reporting a number against this baseline
 
-1. Add `benchmarks/manifests/<name>.json` with an `id`, `domain`, `label`, `traces_to`, `seed`, and
-   `scenarios`. Give every scenario an `expected_outcome`, so it asserts rather than observes.
-2. To make it adversarial, set `adversarial: true`, add `injected_signals`, and use the
-   `injection_prone` backend — an injection benchmark against a backend that ignores its prompt
-   measures nothing.
-3. Run `python scripts/run_benchmarks.py` and commit the manifest, the emitted results, and the
-   regenerated page.
+If you compare your system against these numbers, three things make the comparison checkable, and a
+comparison that is not checkable is not worth publishing:
+
+1. **The manifest and its digest**, both printed on the [results page](index.md). A manifest can be
+   edited; the digest says which version you ran.
+2. **The code version.** Each benchmark records the EADS and Python version it was produced by. State
+   yours, since a metric's definition can change between releases.
+3. **The label.** Every manifest here is an *Illustrative example*, so a comparison against it is a
+   comparison of implementations against a deterministic backend -- not a claim about model
+   behaviour.
+
+A citable form:
+
+```
+Compared against the EADS reference implementation (v2.0.0, manifest
+supply_chain_prompt_injection.json, digest <digest>, label "Illustrative example"),
+which reports injection_resistance = 1.00 against an obedient attack simulator.
+```
+
+The `injection_resistance` number deserves that last clause every time it is quoted. It is measured
+against `InjectionProneLLM`, a backend that *always* obeys an injected instruction, so it bounds what
+the governance layer blocks when the model is maximally compromised. It says nothing about how often a
+real model complies -- and quoting it as a model's resistance would be a misreading this repository
+does not want to enable.
+
+## Contributing a scenario
+
+The interesting contribution is an attack the governance layer *fails* to block.
+
+1. Copy `benchmarks/manifest_template.json` into `benchmarks/manifests/<name>.json`.
+2. Set `expected_outcome` per scenario. A scenario that observes rather than asserts cannot fail, so
+   it adds nothing.
+3. For an attack, set `adversarial: true`, add `injected_signals`, and use the `injection_prone`
+   backend -- an injection benchmark against a backend that ignores its prompt measures nothing.
+4. Run `python scripts/run_benchmarks.py`, then commit the manifest and the regenerated page.
+5. If your scenario is blocked, the table gains a row. If it is *not* blocked, open the PR anyway with
+   the failing expectation: that is a finding, and it is worth more than a passing row.
+
+`python -c "from eads.evaluation.runner import Manifest; Manifest.load('path')"` validates a manifest
+without running it. Unknown fields are refused rather than ignored, so a typo fails loudly instead of
+producing a number for a manifest that was misread.
