@@ -4,12 +4,12 @@ This document is the Phase 1 research foundation and Phase 2 repository design f
 
 ## 1. Research corpus
 
-- **Paper 1** — *Modernizing Legacy Enterprise Platforms Using LLM-Driven Refactoring and AI-Assisted Architecture Transformation*.
-- **Paper 2** — *Leveraging Large Language Models and Autonomous Agents for Unstructured Supply Chain Intelligence*.
-- **Paper 3** — *Reliable LLM-Powered Decision Engines for Large-Scale Supply Chain Operations: Architecture, Safety, and Performance Guarantees*.
-- **Paper 4** — *Operationalizing Generative and Agentic AI Across Complex Logistics Networks: Architecture, Governance, and Trust Models*.
+- **Paper 1** — *Modernizing Legacy Enterprise Platforms Using LLM-Driven Refactoring and AI-Assisted Architecture Transformation*, RMKMATE 2026 (DOI [`10.1109/rmkmate69073.2026.11518954`](https://doi.org/10.1109/rmkmate69073.2026.11518954), IEEE document 11518954).
+- **Paper 2** — *Leveraging Large Language Models and Autonomous Agents for Unstructured Supply Chain Intelligence*, ICETSIS 2026 (DOI [`10.1109/icetsis68266.2026.11548779`](https://doi.org/10.1109/icetsis68266.2026.11548779), IEEE document 11548779).
+- **Paper 3** — *Reliable LLM-Powered Decision Engines for Large-Scale Supply Chain Operations: Architecture, Safety, and Performance Guarantees*, IC_ASET 2026 (DOI [`10.1109/IC_ASET69920.2026.11502212`](https://doi.org/10.1109/IC_ASET69920.2026.11502212), IEEE document 11502212).
+- **Paper 4** — *Operationalizing Generative and Agentic AI Across Complex Logistics Networks: Architecture, Governance, and Trust Models*, ICETSIS 2026 (DOI [`10.1109/icetsis68266.2026.11549394`](https://doi.org/10.1109/icetsis68266.2026.11549394), IEEE document 11549394).
 
-None of the four papers carries a verified DOI in this repository yet; see [`CITING.md`](../CITING.md).
+Each DOI is verified against Crossref by `tests/test_citations.py`; see [`CITING.md`](../CITING.md) for the full IEEE citations.
 
 > **Note on status.** This design is now grounded in the full-text PDF extraction. Exact algorithms, evaluation protocols, and numerical claims are present in `data/papers/extracted/`. Implementation details not directly traceable to a published paper are labeled as *Reference implementation*, *Educational example*, or *Suggested extension*.
 
