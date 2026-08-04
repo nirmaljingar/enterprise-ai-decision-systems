@@ -65,13 +65,27 @@ class DecisionCandidate:
     confidence: float = 0.0
 
 
+APPROVED = "approved"
+REJECTED = "rejected"
+ESCALATED = "escalated"
+
+
 @dataclass
 class Verdict:
+    """Outcome of policy, safety, and permission review.
+
+    ``outcome`` distinguishes the three terminal states the architecture calls for:
+    ``approved`` (execute), ``rejected`` (a policy or safety violation, never executable), and
+    ``escalated`` (permissible but requires a human approval that has not been granted).
+    ``approved`` is the boolean shorthand for ``outcome == "approved"``.
+    """
+
     approved: bool
     reason: str
     violated_policies: list[str] = field(default_factory=list)
     required_approvals: list[str] = field(default_factory=list)
     trust_score: float = 0.0
+    outcome: str = APPROVED
 
 
 @dataclass

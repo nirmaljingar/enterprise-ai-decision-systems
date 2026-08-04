@@ -93,3 +93,22 @@ def test_decision_consistency():
         records.append(pipeline.run(request))
     statuses = {r.execution.status for r in records}
     assert len(statuses) == 1
+
+
+def test_high_value_order_is_escalated_not_rejected():
+    verdict = GovernanceLayer().review(_order(600), {"unit_price": 10.0})
+    assert verdict.outcome == "escalated"
+    assert not verdict.approved
+    assert verdict.violated_policies == []
+    assert "manager_approval_required" in verdict.required_approvals
+
+
+def test_violation_outranks_pending_approval():
+    verdict = GovernanceLayer().review(_order(1500), {"unit_price": 10.0})
+    assert verdict.outcome == "rejected"
+
+
+def test_clean_order_is_approved():
+    verdict = GovernanceLayer().review(_order(10), {"unit_price": 1.0})
+    assert verdict.outcome == "approved"
+    assert verdict.approved
