@@ -1,8 +1,19 @@
 from .benchmark import Benchmark
-from .metrics import decision_consistency, policy_compliance
+from .metrics import (
+    approval_rate,
+    audit_completeness,
+    decision_consistency,
+    evidence_grounding_rate,
+    fallback_recovery_rate,
+    policy_compliance,
+)
 
 __all__ = [
     "Benchmark",
+    "approval_rate",
+    "audit_completeness",
     "decision_consistency",
+    "evidence_grounding_rate",
+    "fallback_recovery_rate",
     "policy_compliance",
 ]
