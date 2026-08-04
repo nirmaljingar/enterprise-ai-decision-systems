@@ -49,7 +49,7 @@ solvers = [
     "ortools>=9.9,<10",
     "scikit-learn>=1.4,<2",
 ]
-forecasters = ["sktime>=0.30,<1", "pandas>=2.0,<3", "numpy>=1.26,<3"]
+forecasters = ["sktime>=0.30,<2", "pandas>=2.0,<3", "numpy>=1.26,<3"]
 pdf = ["pymupdf>=1.24,<2"]
 # `all` deliberately excludes torch: it is a multi-gigabyte download that no test or example
 # needs. Install the `transformers` extra explicitly to get it.
