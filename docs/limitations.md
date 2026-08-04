@@ -40,7 +40,8 @@ harness replays a run and gets the same answer -- at a cost each module README s
 - Tool-invocation precision and decision-latency metrics.
 - Signed or externally persisted audit logs; the `AuditLogger` is in-memory only, and `AuditRecord`
   carries no `signatures` field because no signing mechanism exists to back one.
-- A PyPI release and a Zenodo DOI.
+- A PyPI release. The Zenodo archive exists (concept DOI `10.5281/zenodo.21797859`); see
+  [`CITING.md`](https://github.com/nirmaljingar/enterprise-ai-decision-systems/blob/main/CITING.md).
 
 ## What this is not
 
