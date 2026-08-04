@@ -63,6 +63,14 @@ disputed. Adding your own attack takes one JSON file:
 [contributing a scenario](./docs/benchmarks/about.md#contributing-a-scenario). **The contribution we
 actually want is an attack this layer fails to block.**
 
+## Just want the guard?
+
+`pip install typedguard` ([repository](https://github.com/nirmaljingar/typedguard),
+[PyPI](https://pypi.org/project/typedguard/)) is the same governance boundary as a standalone
+package with no dependencies. It is a distillation of the idea, not a re-export of this code: no
+pipeline, no ingestion, no benchmark harness. This repository stays the reference implementation and
+the benchmark those numbers come from.
+
 ## What else is here
 
 Alpha software, not yet on PyPI. Beyond the governance layer, this is the companion to four IEEE
