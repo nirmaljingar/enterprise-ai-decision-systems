@@ -104,7 +104,9 @@ def _render(rows: list[tuple[Manifest, dict[str, object]]]) -> str:
         lines.append(f"- **Label:** {manifest.label}")
         lines.append(
             f"- **Seed:** {manifest.seed} · **Backend:** `{manifest.backend}` · "
-            f"**Repeats:** {manifest.repeats} · **Manifest digest:** `{manifest.digest}`"
+            f"**Repeats:** {manifest.repeats} · **Manifest digest:** `{manifest.digest}`\n"
+            f"- **Produced by:** EADS {report['metadata']['eads_version']} on Python "
+            f"{report['metadata']['python']}"
         )
         lines.append("")
         lines.append("| Scenario | Expected | Observed | Reason |")

@@ -12,7 +12,14 @@ from pathlib import Path
 
 import pytest
 
-from eads.evaluation.runner import LABELS, Manifest, ManifestError, run_manifest
+import eads
+from eads.evaluation.runner import (
+    LABELS,
+    SCHEMA_VERSION,
+    Manifest,
+    ManifestError,
+    run_manifest,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST_DIR = ROOT / "benchmarks" / "manifests"
@@ -131,3 +138,93 @@ def test_results_are_byte_identical_across_runs(path: Path, tmp_path: Path) -> N
     first = run_manifest(path, tmp_path / "a")
     second = run_manifest(path, tmp_path / "b")
     assert json.dumps(first, default=str) == json.dumps(second, default=str)
+
+
+def test_a_future_schema_version_is_refused_rather_than_guessed(tmp_path: Path) -> None:
+    """A runner that ignores a format it does not know publishes numbers for a manifest it misread."""
+    path = tmp_path / "future.json"
+    path.write_text(
+        json.dumps(
+            {
+                "schema_version": SCHEMA_VERSION + 1,
+                "id": "future",
+                "domain": "supply_chain",
+                "label": "Illustrative example",
+                "traces_to": "nothing",
+                "scenarios": [{"id": "x", "goal": "g", "policy_snapshot": {}}],
+            }
+        )
+    )
+    with pytest.raises(ManifestError, match="schema_version"):
+        Manifest.load(path)
+
+
+def test_an_unknown_field_is_refused_rather_than_dropped(tmp_path: Path) -> None:
+    """A misspelled field would be ignored in silence, and its number published as if honoured."""
+    path = tmp_path / "typo.json"
+    path.write_text(
+        json.dumps(
+            {
+                "id": "typo",
+                "domain": "supply_chain",
+                "label": "Illustrative example",
+                "traces_to": "nothing",
+                "repeat": 5,
+                "scenarios": [{"id": "x", "goal": "g", "policy_snapshot": {}}],
+            }
+        )
+    )
+    with pytest.raises(ManifestError, match="unknown fields"):
+        Manifest.load(path)
+
+
+def test_an_unknown_scenario_field_is_refused(tmp_path: Path) -> None:
+    path = tmp_path / "scenario_typo.json"
+    path.write_text(
+        json.dumps(
+            {
+                "id": "scenario-typo",
+                "domain": "supply_chain",
+                "label": "Illustrative example",
+                "traces_to": "nothing",
+                "scenarios": [
+                    {
+                        "id": "x",
+                        "goal": "g",
+                        "policy_snapshot": {},
+                        "injected_signal": [{"source": "s", "content": "c"}],
+                    }
+                ],
+            }
+        )
+    )
+    with pytest.raises(ManifestError, match="unknown fields"):
+        Manifest.load(path)
+
+
+def test_the_template_is_a_valid_manifest() -> None:
+    """A template that does not load is a trap for the first person who copies it."""
+    manifest = Manifest.load(ROOT / "benchmarks" / "manifest_template.json")
+    assert manifest.schema_version == SCHEMA_VERSION
+    assert manifest.label in LABELS
+
+
+def test_the_template_is_not_run_as_a_benchmark() -> None:
+    """It lives outside manifests/ so its placeholder numbers are never published."""
+    assert (ROOT / "benchmarks" / "manifest_template.json").exists()
+    assert "manifest_template" not in {path.stem for path in MANIFESTS}
+
+
+def test_every_manifest_declares_the_schema_it_was_written_against() -> None:
+    for path in MANIFESTS:
+        assert "schema_version" in json.loads(path.read_text()), (
+            f"{path.name} does not declare schema_version, so a format change cannot be detected"
+        )
+
+
+def test_results_record_the_code_version_that_produced_them(tmp_path: Path) -> None:
+    """Read from the package: distribution metadata went stale and reported "unknown"."""
+    report = run_manifest(MANIFESTS[0], tmp_path)
+    assert report["metadata"]["eads_version"] == eads.__version__
+    assert report["metadata"]["eads_version"] != "unknown"
+
