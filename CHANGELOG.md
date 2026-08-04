@@ -6,7 +6,8 @@ All notable changes to the EADS Research Companion are documented in this file.
 
 ### Added
 - Full paper-to-module traceability for the four IEEE EADS papers.
-- Phase 1.5 PDF extraction pipeline (`eads.paper_extraction`) using PyMuPDF.
+- Phase 1.5 PDF extraction *tooling* (`eads.paper_extraction`) using PyMuPDF. Tooling only: it has
+  never been run against the four papers here, and no extracted corpus ships.
 - End-to-end `DecisionPipeline` covering ingestion, modernization, reasoning, decision, governance, execution, and audit.
 - Real LLM adapters for OpenAI, Anthropic, and Ollama with lazy imports.
 - Solver adapters (SciPy, PuLP, OR-Tools) and forecaster adapters (Naive, sktime).

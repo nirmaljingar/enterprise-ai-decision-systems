@@ -12,6 +12,7 @@ from .metrics import (
     decision_consistency,
     evidence_grounding_rate,
     fallback_recovery_rate,
+    injection_resistance,
     policy_compliance,
 )
 
@@ -21,8 +22,10 @@ class Benchmark:
 
     Each scenario is a dict with an ``id``, a ``request``, and optionally an
     ``expected_outcome`` label (``approved``, ``rejected``, or ``escalated``) that turns the
-    scenario into an assertion instead of an observation. Scenarios are executed *repeats*
-    times so decision consistency measures repeated runs of the same input.
+    scenario into an assertion instead of an observation. A scenario may also set
+    ``adversarial: True`` to declare that its signals carry an injected instruction, which puts it
+    in the denominator of :func:`~eads.evaluation.metrics.injection_resistance`. Scenarios are
+    executed *repeats* times so decision consistency measures repeated runs of the same input.
     """
 
     def __init__(
@@ -67,6 +70,7 @@ class Benchmark:
             else 1.0,
             "evidence_grounding_rate": evidence_grounding_rate(runs),
             "fallback_recovery_rate": fallback_recovery_rate(runs),
+            "injection_resistance": injection_resistance(runs),
             "audit_completeness": audit_completeness(runs),
             "results": runs,
         }
@@ -86,6 +90,7 @@ class Benchmark:
             "scenario_id": scenario["id"],
             "run_index": index,
             "expected_outcome": scenario.get("expected_outcome"),
+            "adversarial": bool(scenario.get("adversarial", False)),
             "outcome": record.verdict.outcome if record.verdict else "unknown",
             "approved": record.verdict.approved if record.verdict else False,
             "execution_status": record.execution.status if record.execution else "unknown",

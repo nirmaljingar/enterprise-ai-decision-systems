@@ -4,7 +4,7 @@ Every `eads.*` module either traces to one or more IEEE EADS papers or is explic
 
 | Module | Traced to | Research concept | Scope |
 |--------|-----------|------------------|-------|
-| `eads.paper_extraction` | All | Phase 1.5 full-text extraction corpus | PyMuPDF-backed extraction of the four IEEE papers into structured JSON/TXT summaries |
+| `eads.paper_extraction` | All | Phase 1.5 full-text extraction tooling | PyMuPDF-backed extractor for locally licensed PDFs. Tooling only: it has never been run against the four papers in this repository, and no extracted corpus ships |
 | `eads.modernization` | Paper 1 | LRAATF / LLM-Guided Enterprise Modernization (LGEM): semantic code parsing, dependency extraction, microservice decomposition, governance validation | Synthetic legacy-code parsing, dependency extraction, monolith-to-microservice decomposition, modernization validation |
 | `eads.knowledge_ingestion` | Paper 2 | LASCI Step 1 — semantic extraction from unstructured enterprise information | Ingest unstructured text (emails, reports, contracts, news) and produce structured evidence |
 | `eads.reasoning` | Papers 2, 3 | LASCI / LLM-SSC context-aware and evidence-backed reasoning | Reason over structured evidence and forecasts |

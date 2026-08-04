@@ -1,0 +1,45 @@
+{
+  "id": "finance_compliance",
+  "domain": "finance",
+  "label": "Illustrative example",
+  "traces_to": "Paper 4 (AGAF): permissions and approval routing",
+  "seed": 13,
+  "repeats": 3,
+  "backend": "fake",
+  "scenarios": [
+    {
+      "id": "fin-low-value-order",
+      "goal": "place a hedging order for the flagged exposure",
+      "policy_snapshot": {
+        "max_order_quantity": 1000,
+        "unit_price": 1.0,
+        "region": "US"
+      },
+      "expected_outcome": "approved",
+      "signal_count": 3,
+      "actor": {
+        "id": "planner-7",
+        "roles": [
+          "planner"
+        ]
+      }
+    },
+    {
+      "id": "fin-high-value-order",
+      "goal": "place a hedging order for the flagged exposure",
+      "policy_snapshot": {
+        "max_order_quantity": 1000,
+        "unit_price": 50.0,
+        "region": "US"
+      },
+      "expected_outcome": "escalated",
+      "signal_count": 3,
+      "actor": {
+        "id": "planner-7",
+        "roles": [
+          "planner"
+        ]
+      }
+    }
+  ]
+}
