@@ -108,7 +108,7 @@ The decision lifecycle is: **Sense / Ingest → Modernize / Extract → Reason /
 | `eads.modernization` | Paper 1 | `ast` dependency graph and connected-component service boundaries; no refactoring |
 | `eads.knowledge_ingestion` | Paper 2 | Lexical claim extraction with source spans, corroboration, and derived confidence |
 | `eads.reasoning` | Papers 2, 3 | Multi-hop selection over the evidence graph, with contradiction reporting |
-| `eads.agents` | Papers 2, 4 | *Stub:* message-passing primitives; no autonomous collaboration |
+| `eads.agents` | Papers 2, 4 | Typed-proposal voting with quorum, recorded dissent, and role-scoped tools |
 | `eads.decision` | Paper 3 | LLM + optimization + forecasting + safety filter |
 | `eads.governance` | Papers 1, 3, 4 | Policy, safety, permissions, fallback, audit, and trust |
 | `eads.evaluation` | Papers 1–4 | Reproducible benchmark harness and metrics |
@@ -216,8 +216,8 @@ reproduction of the papers. What is actually implemented:
   the fail-closed governance layer (policy, safety, permissions, escalation, fallback, audit,
   trust), reproducible records under a fixed clock, synthetic generators, and the benchmark harness
   with six metrics.
-- A stub, despite tracing to a paper: `eads.agents` fans out fixed replies rather than collaborating.
-  It says so in its docstring.
+- `eads.agents` votes over typed proposals with a quorum and records every dissent. Agents do not
+  call a model, negotiate over rounds, or revise a position in response to an argument.
 - `eads.modernization` analyses real Python with `ast` and proposes boundaries from the dependency
   graph, reporting the edges each cut would sever. It does not refactor or generate code, and its call
   graph does not resolve aliases or dynamic dispatch.
