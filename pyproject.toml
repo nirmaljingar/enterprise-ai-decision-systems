@@ -38,7 +38,7 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0,<10", "ruff>=0.4,<1", "mypy>=1.10,<3", "coverage>=7.0,<8"]
-docs = ["mkdocs>=1.6,<2", "mkdocs-material>=9.5,<10", "pymdown-extensions>=10.0,<11"]
+docs = ["mkdocs>=1.6,<2", "mkdocs-material>=9.5,<10", "pymdown-extensions>=10.0,<12"]
 openai = ["openai>=1.0,<3"]
 anthropic = ["anthropic>=0.30,<1"]
 ollama = ["ollama>=0.2,<1"]
