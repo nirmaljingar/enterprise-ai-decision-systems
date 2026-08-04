@@ -59,4 +59,27 @@ class InjectionProneLLM(LLMBackend):
         return " ".join(parts)
 
 
-__all__ = ["InjectionProneLLM"]
+class AmbiguousInjectionLLM(InjectionProneLLM):
+    """An obedient model that restates the compliant order alongside the injected one.
+
+    A real completion summarising an attacker's email frequently carries both numbers -- the figure
+    the operator asked for and the figure the email demands. :class:`InjectionProneLLM` emits only
+    the largest, which is the easy case: one value, checked against the limit, rejected.
+
+    Emitting both is the hard case, and it was the one that got through. A parser that resolves the
+    conflict by position lets whichever value the attacker positioned correctly become the field the
+    guard checks. The only safe reading of two values for one field is that the action was not
+    parsed.
+    """
+
+    def generate(self, prompt: str, seed: int | None = None) -> str:
+        quantities = sorted({int(match) for match in _INJECTED_QUANTITY.findall(prompt)})
+        region = _INJECTED_REGION.search(prompt)
+
+        parts = [f"order_quantity={quantity}" for quantity in quantities] or ["order_quantity=100"]
+        if region:
+            parts.append(f"region={region.group(1)}")
+        return " ".join(parts)
+
+
+__all__ = ["AmbiguousInjectionLLM", "InjectionProneLLM"]
