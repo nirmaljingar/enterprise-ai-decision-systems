@@ -69,7 +69,7 @@ record. See [`CITING.md`](./CITING.md) for full citation guidance and [`docs/res
 - **Domain-agnostic.** Supply chain is the primary worked example, but the architecture is reusable for healthcare, finance, IT operations, customer support, and other domains.
 - **Reproducible.** All examples use synthetic data, deterministic seeds, and pinned dependencies. The same input, seed, and policy snapshot must produce the same observable trace.
 - **Transparent.** Every module, metric, and example either traces to an IEEE paper or is explicitly labeled as a *Reference implementation*, *Educational example*, or *Suggested extension*.
-- **Vendor-neutral.** The core implementation uses the Python standard library and `pydantic`. Optional adapters for LLM backends, solvers, and forecasters are isolated so the architecture stays portable.
+- **Vendor-neutral.** The core implementation uses only the Python standard library. Optional adapters for LLM backends, solvers, and forecasters are isolated so the architecture stays portable.
 
 ## Reference architecture
 
