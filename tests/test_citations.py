@@ -81,7 +81,10 @@ def test_papers_json_is_the_only_source_of_dois() -> None:
     declared = {str(paper["doi"]).lower() for paper in _papers()} | _software_dois()
     pattern = re.compile(r"10\.\d{4,9}/[\w.()/-]*\w")
     for document in _markdown_documents():
-        for found in pattern.findall(document.read_text()):
+        for match in pattern.findall(document.read_text()):
+            # A DOI may legitimately contain dots, so the pattern also swallows a badge image's
+            # extension. Comparing the stripped form keeps the check on the identifier itself.
+            found = re.sub(r"\.(svg|png|json|xml)$", "", match, flags=re.IGNORECASE)
             assert found.lower() in declared, (
                 f"{document.relative_to(ROOT)} cites unknown DOI {found}"
             )
