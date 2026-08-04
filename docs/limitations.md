@@ -19,13 +19,19 @@ This is an open **research artifact**, not a production enterprise framework. Th
   *granted*: there is no approver interface, credential, or grant record. Escalation is a terminal
   state here.
 
-### Modules that are stubs
+### Implemented, but lexically and deterministically
 
-These trace to a paper but do not implement the paper's method. Each says so in its docstring:
+Every paper-traced module now implements a method rather than a placeholder, and none of them calls a
+language model. The implementations are lexical and rule-based, which buys determinism -- the benchmark
+harness replays a run and gets the same answer -- at a cost each module README states in full:
 
-| Module | What it actually does |
-|--------|-----------------------|
-| `eads.agents` | Message-passing primitives only; no autonomous collaboration or negotiation |
+| Module | What it does not do |
+|--------|---------------------|
+| `eads.knowledge_ingestion` | No coreference, negation scope, temporal normalisation, or entity linking; term overlap is not synonymy |
+| `eads.reasoning` | Edges are shared entities and matching figures; no embedding similarity, causal, or temporal inference; cycle detection finds mutually referencing pairs only |
+| `eads.modernization` | No refactoring or code generation; the call graph does not resolve aliases or dynamic dispatch; Python only |
+| `eads.agents` | Agents do not call a model, negotiate over rounds, or revise a position in response to an argument |
+| `eads.governance.trust` | Multipliers are chosen, not fitted, so the score is not a calibrated hallucination probability -- and it authorizes nothing |
 | `DecisionEngine` confidence | A fixed constant (`STUB_CONFIDENCE`), not a calibrated probability |
 
 ### Capabilities that are documented but absent
