@@ -14,10 +14,10 @@ import hashlib
 import json
 import platform
 from dataclasses import dataclass, field
-from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from typing import Any
 
+from .. import __version__
 from ..core.attack import InjectionProneLLM
 from ..core.clock import FixedClock
 from ..core.pipeline import DecisionPipeline
@@ -44,6 +44,20 @@ GENERATORS: dict[str, type[BaseGenerator]] = {
 LABELS = frozenset({"Published methodology", "Illustrative example"})
 FIXED_TIMESTAMP = "2026-01-01T00:00:00Z"
 BACKENDS = frozenset({"fake", "injection_prone"})
+SCHEMA_VERSION = 1
+"""The manifest format this runner accepts.
+
+Versioned so a manifest written elsewhere states which format it was written against, and a runner
+that cannot honour it says so instead of silently ignoring fields it does not recognise.
+"""
+MANIFEST_FIELDS = frozenset(
+    {"schema_version", "id", "domain", "label", "traces_to", "seed", "repeats", "backend",
+     "scenarios"}
+)
+SCENARIO_FIELDS = frozenset(
+    {"id", "goal", "policy_snapshot", "expected_outcome", "signal_count", "actor", "adversarial",
+     "injected_signals"}
+)
 
 
 class ManifestError(ValueError):
@@ -63,6 +77,7 @@ class Manifest:
     backend: str
     scenarios: list[dict[str, Any]] = field(default_factory=list)
     digest: str = ""
+    schema_version: int = SCHEMA_VERSION
 
     @classmethod
     def load(cls, path: Path) -> "Manifest":
@@ -70,6 +85,29 @@ class Manifest:
         missing = {"id", "domain", "label", "traces_to", "scenarios"} - set(raw)
         if missing:
             raise ManifestError(f"{path.name} is missing {sorted(missing)}")
+        declared_schema = int(raw.get("schema_version", SCHEMA_VERSION))
+        if declared_schema != SCHEMA_VERSION:
+            raise ManifestError(
+                f"{path.name} declares schema_version {declared_schema}; this runner accepts "
+                f"{SCHEMA_VERSION}"
+            )
+        # A misspelled field would otherwise be dropped in silence, and the number it was meant to
+        # change would be published as though the field had been honoured.
+        unknown = set(raw) - MANIFEST_FIELDS
+        if unknown:
+            raise ManifestError(f"{path.name} declares unknown fields {sorted(unknown)}")
+        for scenario in raw["scenarios"]:
+            unknown_scenario = set(scenario) - SCENARIO_FIELDS
+            if unknown_scenario:
+                raise ManifestError(
+                    f"{path.name} scenario {scenario.get('id', '?')!r} declares unknown fields "
+                    f"{sorted(unknown_scenario)}"
+                )
+            required = {"id", "goal", "policy_snapshot"} - set(scenario)
+            if required:
+                raise ManifestError(
+                    f"{path.name} scenario {scenario.get('id', '?')!r} is missing {sorted(required)}"
+                )
         if raw["label"] not in LABELS:
             raise ManifestError(
                 f"{path.name} label {raw['label']!r} must be one of {sorted(LABELS)}"
@@ -93,6 +131,7 @@ class Manifest:
             backend=backend,
             scenarios=list(raw["scenarios"]),
             digest=hashlib.sha256(path.read_bytes()).hexdigest()[:16],
+            schema_version=declared_schema,
         )
 
 
@@ -184,10 +223,21 @@ def run_directory(
 
 
 def _version() -> str:
-    try:
-        return version("eads")
-    except PackageNotFoundError:  # pragma: no cover - editable installs vary
-        return "unknown"
+    """The version of the code that produced a number.
+
+    Read from the package rather than installed distribution metadata, which goes stale under an
+    editable install and reported ``unknown`` for the wrong distribution name. A published number
+    whose code version is unknown cannot be compared against a later one.
+    """
+    return __version__
 
 
-__all__ = ["GENERATORS", "LABELS", "Manifest", "ManifestError", "run_directory", "run_manifest"]
+__all__ = [
+    "GENERATORS",
+    "LABELS",
+    "SCHEMA_VERSION",
+    "Manifest",
+    "ManifestError",
+    "run_directory",
+    "run_manifest",
+]

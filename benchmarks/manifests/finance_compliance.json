@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "id": "finance_compliance",
   "domain": "finance",
   "label": "Illustrative example",

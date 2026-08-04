@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "id": "healthcare_triage",
   "domain": "healthcare",
   "label": "Illustrative example",
