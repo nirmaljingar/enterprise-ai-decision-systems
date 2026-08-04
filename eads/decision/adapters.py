@@ -1,3 +1,4 @@
+import re
 from abc import ABC, abstractmethod
 from typing import Any
 
@@ -107,8 +108,6 @@ class NaiveForecaster(ForecasterBackend):
         values: list[int] = []
         for signal in request.signals:
             # Extract simple integers from the signal content as a crude surrogate.
-            import re
-
             values.extend(int(n) for n in re.findall(r"\d+", signal.content))
         last = values[-1] if values else 0
         return {
@@ -132,8 +131,6 @@ class SKTimeForecaster(ForecasterBackend):
             ) from exc
         values: list[int] = []
         for signal in request.signals:
-            import re
-
             values.extend(int(n) for n in re.findall(r"\d+", signal.content))
         if not values:
             return {"predicted_demand": 0, "method": "sktime_naive", "samples": 0}

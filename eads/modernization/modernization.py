@@ -2,7 +2,12 @@ from typing import Any
 
 
 class ModernizationPipeline:
-    """Synthetic legacy-code analysis and decomposition."""
+    """Legacy-code analysis and decomposition.
+
+    Stub: collects text after each ``import`` keyword and names one service per dependency,
+    up to three. It does not build a dependency graph, resolve modules, or analyze coupling,
+    so its output is illustrative only.
+    """
 
     def analyze(self, code: str) -> dict[str, Any]:
         deps = [

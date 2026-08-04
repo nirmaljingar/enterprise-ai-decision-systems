@@ -1,0 +1,13 @@
+# Default owner for everything in this repository.
+*                       @nirmaljingar
+
+# The governance boundary and the shared data model are the safety-critical surfaces:
+# a change here can turn a fail-closed check into a fail-open one.
+/eads/governance/       @nirmaljingar
+/eads/core/             @nirmaljingar
+/eads/decision/parsing.py @nirmaljingar
+
+# Citation metadata: only change with a verified publisher record in hand.
+/CITING.md              @nirmaljingar
+/CITATION.cff           @nirmaljingar
+/data/papers/papers.json @nirmaljingar
