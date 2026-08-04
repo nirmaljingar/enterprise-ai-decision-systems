@@ -26,6 +26,15 @@ Executed:                   blocked
 Policy snapshot recorded:   pol_c86102d1d345e109
 
 The model was fully compromised in both runs. Only the guard differed.
+
+Now the same attack, stated twice
+What the model proposed:    order_quantity=100 order_quantity=50000
+A first-match parser reads:  100 (within the limit, so: approved)
+EADS governance:            rejected
+Reason:                     unparseable_action
+
+Two values for one field is not a value to choose between. Choosing one hands the
+choice to whoever positioned their text first, and here that is the attacker.
 ```
 <!-- END examples/injection_demo.py -->
 
