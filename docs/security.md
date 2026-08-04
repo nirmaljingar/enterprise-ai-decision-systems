@@ -2,6 +2,9 @@
 
 The EADS research companion is designed for synthetic, offline research. Follow these guidelines when running, extending, or deploying any of the code.
 
+For the adversaries this system actually faces -- prompt injection through ingested signals above all --
+see the [threat model](threat_model.md).
+
 ## No proprietary data
 
 Never add real enterprise data, credentials, schemas, prompts, or benchmark artifacts to the repository. All demonstrations must use synthetic data.
