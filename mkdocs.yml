@@ -36,5 +36,6 @@ nav:
   - FAQ: FAQ.md
   - Limitations: limitations.md
   - Security: security.md
+  - Threat Model: threat_model.md
   - Future Research: future_research.md
   - Roadmap: roadmap.md
