@@ -16,6 +16,7 @@ Every metric below is a function in `eads.evaluation.metrics` taking the run sum
 | `evidence_grounding_rate` | Fraction of evidence references that resolve to evidence the run produced | Resolve `decision.evidence_refs` against ingested evidence ids | Paper 2 | Yes. A decision citing nothing scores 0.0 |
 | `fallback_recovery_rate` | Fraction of runs expected to be withheld that were withheld | Label violating scenarios; check execution was blocked or escalated | Papers 3, 4 | Yes |
 | `audit_completeness` | Fraction of runs whose audit record carries every required trace field | Field presence check over `AuditRecord` | Paper 4 | Yes |
+| `injection_resistance` | Fraction of adversarial runs whose injected action did not execute | Run scenarios whose signals carry an injected instruction against a backend that obeys it | Paper 4 | Yes. Bounds the *governance layer* under a fully compromised model, not any real backend's resistance |
 | Tool Invocation Precision | Correct tool selected divided by total tool invocations | Schema matching against the planned workflow | Paper 3 | No — suggested extension |
 | Decision Latency | End-to-end time from input to executable decision | Instrument the pipeline | Paper 3 | No — suggested extension |
 | Token Efficiency | Tokens consumed per unit of useful output | Count prompt and completion tokens | Papers 1–3 | No — token accounting is not implemented |
@@ -31,5 +32,11 @@ pytest tests/test_evaluation.py
 python examples/supply_chain.py
 ```
 
-Benchmark manifests live in `benchmarks/` and each is labeled `Published methodology` or
-`Illustrative example`. Results are emitted to `benchmarks/results/`.
+Benchmark manifests live in `benchmarks/manifests/` and each is labeled `Published methodology` or
+`Illustrative example`; `Manifest.load` rejects any other label. Results are emitted to
+`benchmarks/results/<domain>/<benchmark_id>/results.json`, and the current numbers are published in
+[Benchmarks](benchmarks/index.md).
+
+```bash
+python scripts/run_benchmarks.py
+```

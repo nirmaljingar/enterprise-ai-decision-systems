@@ -161,7 +161,8 @@ def test_escalated_decision_is_not_reported_as_blocked():
     assert record.execution.output["safe_action"] == "request_human_review"
 
 
-def test_trust_score_is_penalized_for_unparseable_actions():
+def test_trust_score_is_capped_when_there_is_no_evidence_to_check_against():
+    """With nothing to verify, a high self-declared confidence buys nothing."""
     unparsed = DecisionCandidate(
         plan_id="t",
         actions=[ProposedAction(type="unknown", raw_value="ship it", parsed=False)],
@@ -169,4 +170,5 @@ def test_trust_score_is_penalized_for_unparseable_actions():
         confidence=1.0,
     )
     assert TrustScorer().score(unparsed) == 0.5
-    assert TrustScorer().score(_order(10)) == 0.5  # confidence 0.5, no penalty
+    assert TrustScorer().score(_order(10)) == 0.5
+    assert "no_evidence_supplied" in TrustScorer().assess(_order(10)).reasons

@@ -9,7 +9,7 @@ Use this checklist when the repository is ready for a public launch.
 - [ ] `README.md` includes problem-first pitch, 60-second quickstart, badges, and examples.
 - [ ] `CHANGELOG.md` is updated for the release.
 - [ ] `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md` are in place.
-- [ ] GitHub release `v1.0.0` is tagged.
+- [ ] GitHub release `v2.0.0` is tagged (see [Releasing](releasing.md)).
 - [ ] PyPI package is uploaded and the badge is verified.
 - [ ] Zenodo DOI is minted and added to `CITATION.cff`.
 - [ ] Docs site is live at `https://nirmaljingar.github.io/enterprise-ai-decision-systems`.
