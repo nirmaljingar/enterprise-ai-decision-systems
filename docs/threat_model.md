@@ -111,8 +111,9 @@ the caller asserts it.
 
 **Adversary.** Anyone supplying a signal with `metadata["source_type"] == "legacy_code"`.
 
-**Control.** `eads.modernization` counts imports and lines; it does not import, `eval`, or execute
-the submitted source. Its output is evidence text, not code.
+**Control.** `eads.modernization` parses the submitted source with `ast` and never imports, `eval`s,
+or executes it; a test submits source with a side effect and asserts the side effect does not happen.
+Its output is evidence text, not code.
 
 **Residual risk.** Analysis output is attacker-influenced text and re-enters the prompt, so T1
 applies transitively.
