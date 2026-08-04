@@ -5,6 +5,7 @@ from .metrics import (
     decision_consistency,
     evidence_grounding_rate,
     fallback_recovery_rate,
+    injection_resistance,
     policy_compliance,
 )
 
@@ -15,5 +16,6 @@ __all__ = [
     "decision_consistency",
     "evidence_grounding_rate",
     "fallback_recovery_rate",
+    "injection_resistance",
     "policy_compliance",
 ]

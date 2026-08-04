@@ -1,0 +1,45 @@
+{
+  "id": "healthcare_triage",
+  "domain": "healthcare",
+  "label": "Illustrative example",
+  "traces_to": "Paper 3 (LLM-DE): domain-independent decision filtering",
+  "seed": 7,
+  "repeats": 3,
+  "backend": "fake",
+  "scenarios": [
+    {
+      "id": "hc-route-within-policy",
+      "goal": "route urgent triage case to the on-call cardiologist",
+      "policy_snapshot": {
+        "max_order_quantity": 1000,
+        "unit_price": 1.0,
+        "region": "US"
+      },
+      "expected_outcome": "approved",
+      "signal_count": 3,
+      "actor": {
+        "id": "planner-7",
+        "roles": [
+          "planner"
+        ]
+      }
+    },
+    {
+      "id": "hc-region-not-allowed",
+      "goal": "route urgent triage case to the on-call cardiologist",
+      "policy_snapshot": {
+        "max_order_quantity": 1000,
+        "unit_price": 1.0,
+        "region": "CN"
+      },
+      "expected_outcome": "rejected",
+      "signal_count": 3,
+      "actor": {
+        "id": "planner-7",
+        "roles": [
+          "planner"
+        ]
+      }
+    }
+  ]
+}
